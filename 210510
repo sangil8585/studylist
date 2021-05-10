@@ -1,0 +1,35 @@
+주석 : 2줄이상의 설명
+ .java(소스)-컴파일러가 번역을 하면 -> 머머.class로 만들어짐
+ */
+
+package first;
+//import java.lang.*;//노란줄:경고 임폴트는 실행하는 순간, 라이브러리에서 가져다 사용할수 있다. 
+				   //컴파일러가 컴파일(이진수)하기 전에 자동으로 삽입
+public class FirstHello {
+
+	public static void main(String[] args) {// 프로그램의 시작
+	//method : 소문자로 시작하고()괄호가 있는 것. 
+		System.out.println("문자열은 입력한 그대로 출력됩니다.");//""<"문자열" = String
+		System.out.println("2+3="); // 문자열안에는 글이 그대로 표시됨
+		System.out.println("2+3"); //마찬가지
+		System.out.println(2+3); //근데 문자열이 없으면 2+3으로 표시됨
+		System.out.println("2+3="+2+3);
+		//"2+3="+"2"=>"2+3=2"=>"2+3=23"
+		
+		/*
+		* + 기능 2가지
+		* 1.수+수 = 더한결과
+		* 2."문자열"+2 = > "문자열"+"2" ->"문자열2" 문자열을 연결해주는+     
+		*	  수+"문자열"
+		*/
+		System.out.println("2+3="+(2+3)); // (2+3)*7 우선순위를 변경법()
+		System.out.println(2+3+"=2+3");
+		// "\로 시작" : 이스케이프 문자
+		System.out.print("2 3 4\n");// \n 다음줄로
+		System.out.println("2\t3\t4\t5"); // \t:탭 크기만큼 띄우기
+		
+		System.out.println('a'); // '문자1개'안에는 문자 하나만 넣을 수 있다.
+		System.out.println("a"); // "문자열" String 클래스 안에 메서드
+	}//프로그램의 끝
+
+}
