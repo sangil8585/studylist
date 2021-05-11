@@ -1,0 +1,190 @@
+
+public class UseVariable {
+
+	public static void main(String[] args) {
+		//논리형 : 참 true 또는 거짓 false
+		boolean b;//변수선언
+		b=true;
+		System.out.println(b);
+
+		boolean b1=false;//변수 선언과 동시에 초기화
+		System.out.println(b1);
+		
+		//boolean타입은 조건문에 많이 사용
+		/* 조건문에 들어갈 수 있는 조건은 결과가 무족너 참 또는 거짓을 결과로 가지는 것은 다된다.
+		 * if(조건문) {참.... }
+		 * else {거짓....}
+		 * 
+		 */
+		if(87>=90) {System.out.println("참이면 실행");}
+		else {System.out.println("거짓이면 실행");}
+		
+		if(b) {System.out.println("참이면 실행");}
+		else {System.out.println("거짓이면 실행");}
+		
+		if(b1) {System.out.println("참이면 실행");}
+		else {System.out.println("거짓이면 실행");}
+		
+		/*
+		 * 수 : 정수와 실수-메모리에 표현방법이 다르다. 숫자를 정수와 실수로 나누었다.
+		 * 1. 정수 : 자료형 byte(1바이트), short(2), 기본int(4), long(8)
+		 * 		장점: 정확하게 수를 메모리에 표현가능
+		 * 		단점: 그러나 표현범위가 좁다.
+		 * 
+		 * 2. 실수 : 자료형 float(4), double(8바이트)
+		 * 		장점: 표현범위가 넓다.
+		 * 		단점: 정밀도가 떨어짐(정확히 표현이 안될때는 그냥 근사치로라도 표현하겠따는 뜻 이때, 오차발생을 하더라도 표현함)
+		 * 		정밀도는 float보다 'double'이 높다.
+		 */
+		System.out.println(Integer.MAX_VALUE);//2의 31승 -1
+		System.out.println(Integer.MIN_VALUE);//2의 -32승
+		
+		System.out.println(Float.MAX_VALUE);
+		System.out.println(Float.MIN_VALUE);//2의 -149승
+	
+		System.out.println("###정수 표현방법###");//"문자열은 그대로 출력"
+		byte bt=3, bt2=7;
+		bt=(byte)300; // 강제로 형변환시키면 데이터손실이 발생할 수 있다. 데이터손실은 데이터가 클때 발생가능성이 있음.
+		System.out.println(bt); //44? 데이터 손실 발생
+		
+		int bt3=300;
+		System.out.println(bt3);//300
+		
+		double bt4=300; //int 300->double 300.0로 '자동 형변환'시켜 저장한다.
+		System.out.println(bt4);//300
+		
+		bt3=(int)123.45;//정수=실수 123.45->123
+		System.out.println(bt3);//데이터손실이 발생 
+		
+		/*
+		 * 왼쪽은 변수만 = 오른쪽은 리터럴/메서드(소문자로시작하고 괄호가있는것)/변수
+		 * 
+		 * 변수 = 리터럴은 '이름없는 메모리'의(정수-4(int), 실수-8(double))
+		 */
+		
+		long i=123456789;// int -> long자동형변환
+		long i2=12345678912L;//'이름없는 메모리' 4->8 (long) 4바이트에 못들어가기때문에 8바이트에 사용해야됨 그래서 뒤에 L이붙음
+
+		System.out.println(Long.MAX_VALUE +","+Long.MIN_VALUE); // 8 더한 결과 
+		System.out.println(Float.MAX_VALUE +","+Float.MIN_VALUE);// 4
+		
+		short s1=1234;
+		int i3=s1;// 개인연산자를 중심으로 왼쪽은 변수만 = 변수 short->int로 자동형변환되어 저장
+		long l3=i3;//int안에 값이 -> long 자동형변환 되어 저장
+		double d2=l3;//long 1234이란 정수가->double 1234.0로 자동 형변환되어 저장
+		System.out.println(s1+","+i3+","+l3+","+d2);
+		
+		l3=i3=s1=789;
+		System.out.println(s1+","+i3+","+l3);
+		
+		/*
+		 * '자동'형변환 : 정수(byte->short->int->long)는 무조건 -> 실수(float.double)로 자동 형변환 된다. 반대는 강제로 형을 변화시켜 넣을 수 있다.
+		 * '강제'형변환 : 데이터 손실 가능성이 있음
+		 */
+		
+		//정수 연산-정확한 결과
+		int i4=17, i5=13;
+		i4=i4+i5;//17+13=30
+		System.out.println(i4);//30
+		
+		/*
+		 * cpu : 중앙처리장치(연산, 제어)
+		 * 정수: int (32767) + int(32767) => int(3000) 결과
+		 */
+		System.out.println(Short.MAX_VALUE+","+Short.MAX_VALUE);
+		short s2=327, s3=327;
+		short s4=(short) (s2+s3);//4바이트->2바이트. 데이터 손실 발생가능성
+		System.out.println(s4);//-2
+		
+		
+		System.out.println("###실수 표현방법###");
+		float f= 3.5f; //f를 왜 뒤에 붙여야하는가? ㅍf는 변수 3.5는 리터럴(이름없는 메모리 : int정수, double실수->f)
+		
+		double e1;
+		e1=1.2E-11;//1.2곱하기 e=10에 -11승. 0.000000000012;
+		System.out.println(e1);
+		
+		//실수연산- 정확한 결과가 안나올 수 있다. (오차 발생 가능)
+		double d1=0.0000001, d12=1.0000001;
+		System.out.println(d1+"+"+d12+"="+(d1+d12));
+		
+		System.out.println("###문자(아스키코드:0~127 128의 '문자':숫자=1:1, 유니코드(java)2바이트:한글, 중국어 등 전세계 문자를 숫자로 1:1로 대응해놓음)###");
+		char c1='a';//97의 2진수
+		char c2='b';//98의 2진수
+		char c3=' ';//?의 2진수
+		System.out.println(c1+c2+c3);//227
+		System.out.println(c1+","+c3+","+c2);//"a"+","
+		System.out.println((int)c1+","+(int)c3+","+(int)c2);//"97"+","
+		
+		int n1=97;
+		System.out.println(n1);//97
+		System.out.println(c1);//'a'
+		
+		System.out.println((char)n1);//97->'a'
+		System.out.println((int)c1);//'a'-97
+		
+		//변수는 반드시= 대입연산자를 통해서만 '값이 변경'된다.
+		c1=(char) (c1-32);//cpu 97(int)-31(int)=65(int 4)
+		System.out.println(c1);//'A'
+		System.out.println((int)c1);//65
+		
+		c1='\uAC00';// \\u : 유니코드 +16진수
+		System.out.print(c1+","); //가
+		System.out.println((int)c1); //44032
+		
+		int n2=0xAC00;//x는 hex의 약자 hex: 16진수
+		System.out.print(n2+",");//정수 44032. 인트타입으로 했기때문에 인간이 이해가능한 10진수
+		System.out.println((char)n2);//가
+		
+		if(c1 == n2) System.out.println("같다");
+		else System.out.println("다르다");
+		
+		c1='a';
+		n2=97;
+		if(c1 == n2) System.out.println("같다");
+		else System.out.println("다르다");
+		
+		/*
+		 *
+		 * 자바의 정석 37p참조
+		 * printf("",)  format(서식)
+		 * -정수 decimal :10진수 (%d)
+		 * 		hex	   :16진수  (%x) 0~9, a 10, b 11, ...f 15
+		 * 		octal   :8진수	  (%o)
+		 * 		boolean :ture(0이 아닌 모든수)/false(0) (%b)
+		 * 		
+		 * -실수		:%f('부동소수점' 형식으로 출력)
+		 * 			:%e, %E ('지수'형식으로 출력)
+		 * 			:%g (%f(소수6째자리까지)나 %e 중 하나를 선택하여 출력)
+		 * 
+		 * -문자(character) 'a' : %c
+		 * -문자열(String)   "a" : %s
+		 * -다음 줄로 : \n (newline)
+		 * -탭크기만큼 :\t (tab)
+		 */
+		
+		int n3=10, n4=20, n5=30;
+		System.out.println(n3+","+n4+","+n5);//이러면 10진수 정수로 출력
+		// "이스케이프 문자열 \n\t %로시작" 
+		System.out.printf("%d \t###\t %x \t###\t %o\n",12,12,12);
+		System.out.printf("10진수:%d, 16진수:%x, 8진수:%o, boolean:%b \\n \n", n3,n3,n3,n3);
+		
+		double d3=0.123;
+		System.out.printf("%f\t\t%e\t\t%g\n",d3,d3,d3);
+		System.out.println(d3);
+		
+		char c5='A';//65의 2진수
+		System.out.println(c5+", "+(int)c5);
+		System.out.printf("%c %d\n",c5,(int)c5);
+		
+		String str1="문자열1";
+		String str2="문자열2";
+		System.out.printf("%s, %s\n",str1, str2);
+		
+		int n6 = 123; //2진수로 출력
+		System.out.println(Integer.toBinaryString(n6)); //"1111011"
+		
+					
+	}
+
+}
