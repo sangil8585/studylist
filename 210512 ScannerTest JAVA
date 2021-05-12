@@ -1,0 +1,42 @@
+import java.util.Scanner; //ctrl + shift + o
+
+public class ScaannerTest {
+
+	public static void main(String[] args) {//소문자로 시작하고 괄호가 있으면~() 메서드라고함. 메서드(함수) : 소문자로 시작~()
+		Scanner sc=new Scanner(System.in);//생성자:객체생성->heap메모리. System.in:키보드
+		
+		System.out.print("문장 입력:");
+		//sc.nextLine();
+		String s3=sc.nextLine();//★nextLine():'엔터까지' 읽어들인 후 엔터를 버리고 나머지로 문자열 객체 생성
+		System.out.println(s3);
+	
+		
+		System.out.println("두 정수 입력:");
+		
+		int n1=sc.nextInt();//키보드로 12를 입력하고 엔터를치면 - >엔터까지 합쳐서 버퍼에 12입력.이미버퍼는 12는 읽었기때문에 나가버림, 엔터만남아있음.
+		int n2=sc.nextInt();//버퍼:엔터 키보드로 17입력 엔터, 버퍼:엔터(무시) 17 엔터
+		//netInt(),nextDouble(),next():'구분자(엔터,스페이스바,tab)은 구분라해서 무시'. 버퍼:17 엔터 -> 버퍼: 엔터
+		System.out.println(n1+","+n2); //키보드로 입력값만 출력했기때문에 콘솔에 뜨지않음
+		
+		System.out.print("실수 입력:");
+		double d1=sc.nextDouble();//버퍼:엔터가 남아있음. 키보드로 7입력 후 엔터 그러면 버퍼: 엔터 7 엔터 있음. 
+								  //그러면 버퍼: 7 엔터 근데 더블이라 7.0으로읽음
+		System.out.println(d1);
+		
+		System.out.print("단어 입력:");
+		String s1=sc.next();//버퍼:엔터 "행복 사랑"입력 후 엔터   버퍼: 스페이스바 사랑 엔터 . 
+		System.out.println(s1);//구분자 앞까지 읽어들임. 구분자가 맨첨에 있으면 구분자를 무시
+		
+		System.out.print("문장 입력:");//버퍼:스페이스바 사랑 엔터
+		sc.nextLine();//"객체메모리를 heap메모리에. 근데 참조하지 않으니 쓰레기객체라 부름."
+					  //"" 버퍼: 비어있음. 버퍼안에 있는 엔터까지 읽어들인 후 엔터 버리고 나머지로 문자열 객체 생성"".
+					  //참조하지 않으면 쓰레기 객체(CG 소거해줌)
+		String s2=sc.nextLine();//★nextLine():'엔터까지' 읽어들인 후 엔터를 버리고 나머지로 문자열 객체 생성
+		System.out.println(s2);//"  ' ''사''랑'  "
+		
+		
+		
+		
+	}
+
+}
