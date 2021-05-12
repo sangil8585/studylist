@@ -1,0 +1,107 @@
+package ifswitch;
+
+import java.util.Scanner;
+
+public class IfSwitch {
+
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		
+		System.out.print("점수 입력(0~100):");
+		int n1=sc.nextInt();//88
+		
+		
+		//단독으로 if문이 나열되어있는 경우: 서로 영향을 미치는 것이 아니라 그냥 참이면 알아서 실행시키는 것. 순서가 중요한것이 아니다
+		if(n1>=90) System.out.print("A");
+		if(n1>=80 && n1<90) System.out.print("B");
+		if(n1>=70 && n1<80) System.out.print("C");
+		if(n1>=60 && n1<70) System.out.print("D");
+		if(n1<60) System.out.print("F");
+		
+		System.out.println("학점");
+		
+		
+		//if~else if~...else :서로관련이있는 한 덩어리이므로 '여러 조건문에서 단 하나만 참'이 될 수 있다.
+		if(n1>=90) System.out.print("A");
+		else if(n1>=80) System.out.print("B"); //else : n1<90
+		else if(n1>=70) System.out.print("C"); //else : n1<80
+		else if(n1>=60) System.out.print("D"); //else : n1<70
+		else System.out.print("F"); //else가 60보다 작다는 의미가 포함 되어있기때문에 없애도 된다.
+		
+		System.out.println("학점");//무조건 실행. 중복단어는 이렇게 만드는게 좋다.
+		
+		//중첩if문 -정석144
+		if(n1>=90) {//92
+			if(n1>=95) System.out.print("A+");
+			else System.out.print("A");  
+		}else if(n1>=80) { 
+			if(n1>=85) System.out.print("B+");
+			else System.out.print("B");
+		}else if(n1>=70) { 
+			if(n1>=75) System.out.print("C+");
+			else System.out.print("C");
+		}else if(n1>=60) {
+			if(n1>=65) System.out.print("D+");
+			else System.out.print("D");
+		}else System.out.print("F"); 
+		
+		System.out.println("학점");
+		
+		/**
+		 * switch()문-여러 개 중 하나만 선택하여 실행
+		 * ()안에 들어갈 수 있는 내용:정수, '문자', "문자열"을 결과로 가지는 모든 것
+		 */
+		
+		switch(3) {
+		case 1:System.out.println("1"); 
+				break;
+		case 2:System.out.println("2");	
+				break; 
+		default:System.out.println("1,2이외의 값");//1,2이외의 모든것은
+				break; //마지막 생략가능
+		}
+		
+		switch('0'+1) {//'0'->메모리 48의 2진수
+		case '0':System.out.println("문자0"); 
+				break;
+		case '1':System.out.println("문자1");	
+				break; 
+		case 50:System.out.println("문자2");	
+				break; 
+		default:System.out.println("문자0,1,2 이외의 문자");//1,2이외의 모든것은
+				break; //마지막 생략가능
+		}
+		
+		switch("부자") {
+		case "행복":System.out.println("행복"); break;
+		case "주식":System.out.println("주식"); break;
+		case "부자":System.out.println("부자"); break;
+		default:System.out.println("행복 주식 부자 이외의 문자열");//break;
+		}
+		
+		//성적산출
+		System.out.print("점수 입력(0~100):");
+		int n2=sc.nextInt();
+		switch(n2/10) {//88
+		case 10://System.out.println("A"); break; //sysout 생략가능 같은 걸 실행하는 것은 보기좋게 한번만 실행해도됨
+		case 9:System.out.println("A"); break;
+		case 8:System.out.println("B"); break;
+		case 7:System.out.println("C"); break;
+		case 6:System.out.println("D"); break;
+		default:System.out.println("F"); //break;
+		}
+		
+		/****************카페 주문******************/
+		System.out.print("메뉴(아메리카노, 카페라떼, 카푸치노, 주문안함)=>");
+		String order=sc.next();//입력받은것을 문자열로 받아들임 ex)아메리카노 엔터 하면 next 아메리카노를 읽은다음 보내줌
+		
+		switch(order) {
+		case "아메리카노":System.out.println(order+"를 주문하셨습니다."); break;
+		case "카페라떼" :System.out.println(order+"를 주문하셨습니다."); break;
+		case "카푸치노" :System.out.println(order+"를 주문하셨습니다."); break;
+		default:System.out.println("메뉴에 없습니다.");//break; 생략가능
+		}
+
+	}
+
+}
