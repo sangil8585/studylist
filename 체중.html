@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>BMI (체질량지수)</title>
+
+    <link rel="stylesheet" href="bmi.css">
+    <style>
+        table, td { 
+            width: 400px;
+            border:1px solid paleturquoise;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                키(cm)
+            </td>
+            <td>
+                <input type="text" id="height">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                몸무게(kg)
+            </td>
+            <td>
+                <input type="text" id="weight">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="button" onclick="bmiCalc()" value="BMI 계산">
+            </td>
+            <td>
+                <input type="text" id="bmi_value" readonly>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="radio" onclick="return(false);" name="bmi_result" id="underweight">저체중
+                <input type="radio" onclick="return(false);" name="bmi_result" id="normal">정상
+                <input type="radio" onclick="return(false);" name="bmi_result" id="overweight">과체중
+                <input type="radio" onclick="return(false);" name="bmi_result" id="obesity">비만
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+<script> //
+    function bmiCalc() {
+        var height = document.getElementById('height').value;   // cm
+        height = parseInt(height);                              // 문자열을 숫자로 변환
+        height = height / 100;
+
+        var weight = document.getElementById('weight').value;   // kg
+        //var bmi_value = weight / (height * height);
+        var bmi_value = weight / Math.pow(height, 2);
+        bmi_value = Math.round(bmi_value);                      // 반올림
+        
+        if(bmi_value < 20) {
+            document.getElementById('underweight').checked = true;
+        }
+        else if (bmi_value <= 25) {
+            document.getElementById('normal').checked = true;
+        }
+        else if (bmi_value < 30) {
+            document.getElementById('overweight').checked = true;
+        }
+        else {
+            document.getElementById('obesity').checked = true;
+        }
+        document.getElementById('bmi_value').value = bmi_value; // 할당, 대입 
+
+        document.getElementById('normal').checked = ture;
+        
+    }
+</script>
