@@ -1,0 +1,34 @@
+package forwhiledowhile;
+
+public class ForWhileDowhile {
+
+	public static void main(String[] args) {
+		//1~10더한 합
+		int hap=0,i;
+		for(i=1;i<=10;i++){
+			hap+=i;
+		}
+		System.out.println(hap+","+i);//합은 55, 그러나 i는 11 이유는 i는 11일때 거짓이 나와서 for문이 끝남
+		
+		hap=0;
+		i=1;
+		while(i<=10) {//(조건문은 생략불가)
+			hap+=i;
+			i++;
+		}
+		System.out.println(hap+","+i);//55,11
+	
+		//do~while(조건); 적어도 1번은 실행
+		hap=0;
+		i=1;
+		do{
+			hap+=i;//0+1
+			i++;//2
+		}while(i<=10); //주의
+		System.out.println(hap+","+i);//55,11
+	
+	
+	
+	}
+
+}
