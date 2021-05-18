@@ -1,0 +1,83 @@
+CREATE TABLE MEMBER --명령어 사이는 반드시 한칸 띄우기
+(   
+    ID         VARCHAR2(10) NOT NULL PRIMARY KEY, --NOT NULL
+    PWD        VARCHAR2(50),
+    NAME       VARCHAR2(50),
+    GENDER     NCHAR(2),         --남성, 여성
+    AGE        NUMBER(3),       --100세 이신분이 있을 수 있음.
+    BIRTHDAY   CHAR(10),        --2000-10-01
+    POHONE     CHAR(13),        --010-1234-1234
+    REGDATE    DATE
+);
+
+
+
+DROP TABLE MEMBER;
+
+INSERT INTO MEMBER VALUES('test1', '1234', '변상일', '남성', 29, '1993-02-24', '010-3945-6636', '2021-05-18');
+insert into member(id, pwd) values('1234');
+insert into member(pwd, id) values('1234', 'test3');
+insert into member(id, pwd, NAME) values('test3, '1234', '변상일');
+
+select * from member;
+select id, name, pwd from member;
+select name, pwd, id from member;
+
+SELECT LENGTH(GENDER) FROM MEMBER;  --문자수 출력
+SELECT LENGTHB(GENDER) FROM MEMBER; --바이트크기 출력
+select length('한글') from dual;
+select lengthb('한글') from dual;
+
+select * from nls_database_parameters;
+
+DESC MEMBER;
+COMMIT;
+ALTER TABLE MEMBER MODIFY PWD NVARCHAR2(50) NOT NULL;
+ALTER TABLE MEMBER MODIFY NAME NVARCHAR2(50) NOT NULL PRIMARY KEY;
+ALTER TABLE MEMBER DROP COLUMN AGE;
+ALTER TABLE MEMBER ADD EMAIL VARCHAR2(200);
+
+
+CREATE TABLE EMPLOYEE(
+    ENO         NUMBER(4),
+    ENAME       VARCHAR2(10),
+    JOB         VARCHAR2(9),
+    MANAGER     NUMBER(4),
+    HIREDATE    DATE,
+    SALARY      NUMBER(7,2),
+    COMMISSION  NUMBER(7,2),
+    DNO         NUMBER(2)
+);
+
+CREATE TABLE DEPARTMENT(
+    DNO         NUMBER(2),
+    DNAME       VARCHAR2(14),
+    LOC         VARCHAR2(13)
+);
+
+CREATE TABLE SALGRADE(  --""를 붙이면 띄워쓰기해서 실행가능함
+    GRADE      NUMBER,
+    LOSAL      NUMBER,
+    HISAL      NUMBER
+);
+
+DROP TABLE DEPARTMENT;
+DESC DEPARTMENT;
+
+INSERT INTO MEMBER VALUES('test1', '1234', '변상일', '남성', '1993-02-24',
+                    '010-1111-2222', '2020-05-05', 'test@test.met');
+
+SELECT * FROM MEMBER;
+
+UPDATE MEMBER SET NAME = '염수은' WHERE id = 'TEST8';
+SELECT ID AS 도르마무, PWD, NAME FROM MEMBER;
+SELECT ID 도르마무, PWD, NAME FROM MEMBER; --AS 생략가능
+
+delete member where id= 'test5';
+
+selelct dno from department;
+
+--모든 회원의 이름을 조회하시오.
+select name from member;
+--모든 회원의 이름을 조회하시오. 단 이름은 id를 붙여서 나타내시오. 예 변상일(test1)
+select name || '(' || id || ')' as "name(id)" from member; --""
