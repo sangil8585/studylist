@@ -1,0 +1,171 @@
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class ArrayExample {
+
+	public static void main(String[] args) {
+		/**배열을 사용하지 않았을 때**/
+		int s1 = 80;
+		int s2 = 83;
+		int s3 = 70;
+		int s4 = 67;
+		
+		//더한 합과 평균?
+		int sum = s1+s2+s3+s4;
+		System.out.println("합="+sum+",평균="+(double)sum/4);//더블로 만들면 뒤에 소수점이 붙음
+		
+//		정수 사이에는 일정한 규칙이 없어서 반복문 사용불가
+//		int i;
+//		sum=0;//위에서 사용 했기 때문에 반드시 0으로 초기화
+//		for(i=1;i<=4;i++) {
+//			sum+=si;
+//		}
+		
+		/** 배열 선언, 배열 생성하면 (heap 메모리) 올라감. 올라감과 동시에 값 목록을 대입**/
+		int[] scores= {80, 83, 70, 67};//배열선언함. 배열은 반드시 같은 타입만 저장된다. int만 저장
+					//  0,  1,  2,  3    index는 0부터 시작한다
+					//배열객체:length == 마지막 index 번호+1" (읽기전용 필드)
+		
+		scores[0] = 80;//대입 연산자를 이용해서만 값 변경. ++ --은 대입연산자가 있지만 스콜스는 =잇어야댐
+		
+		System.out.println(scores[0]);
+		System.out.println(scores[1]);
+		System.out.println(scores[2]);
+		System.out.println(scores[3]);
+		
+		sum=0;
+		sum=0+scores[0]+scores[1]+scores[2]+scores[3];
+		System.out.println("배열만 사용한 합="+sum);
+		
+		int i;
+		sum=0;
+		for(i=0;i<scores.length;i++) {//i의 역할 : index번, 반복 횟수, 반속실행하는 실행문에도 영향
+			sum+=scores[i];
+		}
+		System.out.println("배열과 반복문 사용한 합"+sum);
+		
+		//평균?
+		double avg = (double)sum/scores.length;
+		System.out.println("평균"+avg);
+		
+		System.out.println("int타입 배열객체="+scores);//int타입 배열객체
+		System.out.println("int타입 배열객체="+scores.toString());
+		/**************문자형 배열*****************************************/
+		char[] ch = {'a', 'b', 'c'};
+		//옆으로 출력
+		for(i=0;i<ch.length;i++) {//i<3
+			System.out.print(ch[i]+"\t");
+		}
+		System.out.println();//커서를 아래로
+		
+		/**
+		 * 과제-2 : 마지막 , 출력 안되도록 옆으로 출력
+		 */
+		
+		
+		//옆으로 출력
+		for(i=0;i<ch.length;i++) {//i<3
+			System.out.print(ch[i]+",");
+		}
+		System.out.println();//커서를 아래로
+		System.out.println();//구분 위한 빈줄
+		
+		String charstr="";
+		for(i=0;i<ch.length;i++) {//i<3
+			charstr=charstr+ch[i]+",";
+		}
+		System.out.println("방법-1:substring()이용="+charstr.substring(0, charstr.length()-1));//커서를 아래로
+		System.out.println();//구분 위한 빈줄
+		
+		
+		
+		//Arrays클래스는 배열을 조작하기 위한 클래스
+		System.out.println(Arrays.toString(ch));//[a,b,c]
+		
+		System.out.println(ch);//ch:char형타입의 배열의 주소
+		System.out.println("char타입 배열객체="+ch);
+		System.out.println("char타입 배열객체="+ch.toString());
+		
+		//char 배열안에 값을 변경 [a 97,b 98,c 99] -> [A 65,B 66,C 67] 변경하는 유일한방법 사용
+		for(i=0;i<ch.length;i++) {
+			ch[i]-=32;
+		}
+		System.out.println("char형 배열 값 변경1="+Arrays.toString(ch));
+
+		for(i=0;i<ch.length;i++) {
+			System.out.print(ch[i]-32+","+(char)(ch[i]-32)+" ");
+		}
+		System.out.println();//커서를 아래로
+		
+		System.out.println("char형 배열 값 변경2="+Arrays.toString(ch));//값 변경안됨
+		
+		System.out.println("****아스키 코드 출력****");
+		for(i=0;i<127;i++) {
+			System.out.println(i+","+(char)i);
+		}
+		System.out.println();//구분 위한 빈줄
+		
+		/*** 배열 선언 후 배열 목록 생성 방법-1(정석-183p)*************/
+		int[] sco1=null;//배열 선언. null:참조하는 배열객체가 없다.
+		
+		/*
+		 * 예외 처리 방법 1번째
+		 * try{예외가 발생할 가능성이 있는 부분} //만약 예외가 발생하면 = 예외객체가 생성되면 
+		 * catch(Exception e){예외처리과정} //잡아서 예외처리
+		 */
+//		try {
+//			System.out.println(sco1[0]);//오류없음. NullPointException 예외객체 발생하면 프로그램 강제 종료
+//		} catch (Exception e) {		//Exception:예외의 부모이므로 자식예외객체를 받을 수 있다.
+//			e.printStackTrace();
+//			//System.out.println("참조하는 배열객체가 존재하지 않습니다.");
+//		} 
+		
+		//System.out.println("이 부분이 실행되나요?");
+		
+//		int k;//지역변수는 반드시 초기화
+//		System.out.println(k);//오류
+		
+		/* 
+		 * 객체 안에 값을 주지 않으면 기본값이 저장된다.
+		 * 기본값 (기본타입 int:0, double:0.0, char:'\0'널문자,  boolean:false	  	/	  클래스타입 String:null
+		 */		
+		
+		sco1=new int[3];//[0,0,0] 0,1,2
+		System.out.println(Arrays.toString(sco1));
+		
+		//반복문 이용하여 0 10 20를 값을 변경
+		for(i=1;i<sco1.length;i++) {
+			sco1[i]=sco1[i-1]+10;
+		  //sco1[1]=sco1[0]+10; //10
+		  //sco1[2]=sco1[1]+10; //20
+		}
+		
+		//지금부터 90 85 99를 대입하세요.
+		sco1[0]=90;
+		sco1[1]=85;
+		sco1[2]=99;
+		
+		System.out.println(Arrays.toString(sco1));
+		
+		/**
+		 * 과제-3 : 배열의 크기(예:2)를 입력받아 int 타입 배열 생성 후
+		 * 		   "정수를 입력받아 int 타입 배열에 저장하고 sum에 누적"(반복)
+		 * 		   합과 평균을 구하기
+		 */
+		Scanner sc=new Scanner(System.in);
+		int sco2[]=null;
+		System.out.println("배열의 크기 입력:");
+		//배열객체 생성
+		
+//		}
+		//합과 평균 구하기
+		
+		
+		
+		
+		
+		
+		
+	}
+
+}
