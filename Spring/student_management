@@ -1,0 +1,100 @@
+package student_management;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Scanner;
+
+public class Score {
+	static String url = "jdbc:mysql://localhost/student_management";
+	static String user = "root";
+	static String password = "1234";
+
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		Scanner keyboard = new Scanner(System.in);
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");  
+		Connection con = DriverManager.getConnection(url, user, password);
+		
+		while(true) {
+			System.out.print("1. 전체 조회  2. 데이터 등록   7. 오늘 날짜  8. 현재 시간 9. 종료 ");
+			int choice = keyboard.nextInt();
+			switch(choice) {
+			case 1:
+				allDisplay(con);
+				break;
+			
+			case 2:
+				dataInesrt(con, keyboard);
+				break;
+			
+			case 7:
+				LocalDate date = LocalDate.now(); 
+				int year = date.getYear();
+				int month = date.getMonthValue();
+				int day = date.getDayOfMonth();
+				
+				String d = String.format("%d-%d-%d", year, month, day);
+				System.out.println("날짜: " + d);
+				break;
+				
+			case 8:
+				// LocalDateTime : 날짜 + 시간
+				LocalTime time = LocalTime.now();
+				int hour = time.getHour();
+				int minute = time.getMinute();
+				int second = time.getSecond();
+				
+				String t = String.format("%d:%d:%d", hour, minute, second);
+				System.out.println("시간: " + t);
+				break;
+			case 9:
+				System.exit(0); // 정상 종료
+			}
+		}
+	}
+	
+	private static void allDisplay(Connection con) throws SQLException {
+		String sql = "select * from score;";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()) {
+			int id = rs.getInt("id");
+			String name = rs.getString("name");
+			int guk = rs.getInt("guk");
+			int math = rs.getInt("math");
+			int sahee = rs.getInt("sahee");
+			
+			String s = String.format("%d %s %3d %3d %3d", id, name, guk, math, sahee);
+			System.out.println(s);
+		}
+	}
+	
+	private static void dataInesrt(Connection con, Scanner keyboard) throws SQLException {
+		System.out.print("이름 입력 ");
+		String name = keyboard.next();
+		
+		System.out.print("국어 점수 입력 ");
+		int guk = keyboard.nextInt();
+		
+		System.out.print("산수 점수 입력 ");
+		int math = keyboard.nextInt();
+		
+		System.out.print("사회 점수 입력 ");
+		int sahee = keyboard.nextInt();
+		
+		String sql = "INSERT INTO score(name, guk, math,sahee) values(?, ?, ?, ?)";
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, name);
+		ps.setInt(2, guk);
+		ps.setInt(3, math);
+		ps.setInt(4, sahee);
+		int affectedRows = ps.executeUpdate();
+		
+		if (affectedRows == 1) {
+			System.out.println("정상 등록되었습니다.");
+		}
+	}
+}
