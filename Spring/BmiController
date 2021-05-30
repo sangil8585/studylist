@@ -1,0 +1,32 @@
+package com.sangil8585.my_bmi;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class BmiController {
+
+	@GetMapping("/")
+	public String bmi_input() {
+		
+		return "bmi_input";
+	}
+	
+	// MVC 에서 Model에 특정 값을 등록하여 뷰에서 등록된 값을 사용한다.
+	@PostMapping("/bmi_result")
+	public String bmi_result(
+			@RequestParam("height") int height,
+			@RequestParam("weight") int weight
+			) {
+		
+	    double dHeight = (double)height / 100.0; // cm가 meter로 환산을 위해 double로 형 일치 시킴
+
+        double dBmi_value = weight / Math.pow(dHeight, 2); //=의 오른쪽에서 일어나는게 숫자. var이 숫자로 변환한다는 뜻.
+        long bmi_value = Math.round(dBmi_value); //소수점 첫째자리에서 반올림
+
+
+		return "bmi_result";
+	}
+}
