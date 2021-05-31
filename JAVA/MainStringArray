@@ -1,0 +1,68 @@
+package copy;
+
+import java.util.Scanner;
+
+public class MainStringArray {
+	//1. 맴버변수=필드:속성
+	
+	/*
+	 * 2. 생성자:반드시 존재해야함. 생성자의 역할 : 맴버변수에 값을 주어 객체 생성
+	 * 생성자 없으면 컴파일러가 기본생성자를 자동 삽입. 생성자의 {}안에 super();가 없으면 이것도 컴파일러가 첫 줄에 자동 삽입해준다.
+	 * -기본생성자 public MainStringArray(){super();}
+	 * 
+	 * -super(); 부모의 생서자를 호출-> 부모 객체 생성
+	 */
+	
+	//3. 메서드 : 기능
+	
+	//JVM이 main()을 호출할 때 length의 길이가 0인 String[]계열 객체를 생성해서 메인을 호출함 
+	public static void main(String[] args) {//메서드 안에 선언한 지역변수
+		//System.out.println(args.length);
+		if(args.length != 4) {
+			System.out.println("실행할 때 4개의 숫자를 입력해주세요.(정수 2개, 실수 2개)");
+			return;//해당 매서드(main) 종료
+			//system.exit(0); 메서드 안에서 이 실행문을 만나면 프로그램을 종료
+		}
+		
+		//String s1=args[0];//"10"
+		String s2=args[1];//"20"
+		String s3=args[2];//"1.23"
+		String s4=args[3];//"2.3"
+		
+		//문자열 -> 정수
+		int i1=Integer.parseInt(args[0]);//"10"->10
+		int i2=Integer.parseInt(s2);//"20"->20
+		
+		//문자열 -> 실수
+		//Integer.parseInt(s3);//"1.23"->정수로 변환 할수 없다.
+		double d1=Double.parseDouble(s3);//"1.23"->1.23
+		double d2=Double.parseDouble(s4);//"2.3"->2.3
+		
+		/*
+		 * switch(정수/문자/문자열을 결과로 가지는 것) {
+		 * case 정수/문자/문자열: (예)case 0: case 'a': case "a":
+		 * }
+		 */
+		Scanner sc=new Scanner(System.in);
+		System.out.println("<정수연산> 연산자(+-*/) 중 입력:");
+		String opr=sc.next();
+		
+		MainStringArray msa=new MainStringArray();//기본생성자
+		switch(opr) {
+		case "+":System.out.println(i1+"+"+i2+"=" +msa.add(i1, i2)); break;
+		case "-":System.out.println(i1+"-"+i2+"=" +msa.sub(i1, i2)); break;
+		case "*":System.out.println(i1+"*"+i2+"=" +msa.multi(i1, i2)); break;
+		case "/":System.out.println(i1+"/"+i2+"=" +msa.div(i1, i2)); break;
+		default : System.out.println("잘못된 연산자입니다.");
+		}
+		
+		System.out.println("<실수연산> 연산자(+-*/) 중 입력:");
+		opr=sc.next();
+		
+		switch(opr) {
+		case "+":add(d1, d2); break;
+		case "-":sub(d1, d2); break;
+		case "*":multi(d1, d2); break;
+		case "/":div(d1, d2); break;
+		default : System.out.println("잘못된 연산자입니다.");
+		}
