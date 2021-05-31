@@ -1,0 +1,83 @@
+package 숙제;
+
+public class 과제1 {
+
+	public static void main(String[] args) {
+		/**
+		 * 과제-5 java 과목의 각 반 성적의 합과 평균을 구하기
+		 * 		 java 과목의 총 합과 퐁 평균 구하기	  
+		 */
+		int[][] java = {
+				{100, 95}, //1반-2
+				{77, 83, 81, 79}, //2반
+				{90, 89, 85,} //3반
+				};
+		int sum = 0, count = 0, i, j;
+		for(i=0;i<java.length;i++) {
+			for(j=0;j<java[i].length;j++) {
+				sum += java[i][j];
+				count++;
+			}
+		}
+		System.out.println("성적 총 합 "+sum);
+		System.out.println("성적 총 평균 "+(double)sum/count);
+		System.out.println();
+
+		sum=0;
+		for(i=1;i<java.length;i++) {
+			sum = 0;
+			for(j=0;j<java[i].length;j++) {
+				sum += java[i][j];
+			}
+		System.out.println(i + 1 + "성적 총 합 "+sum);
+		System.out.println(i + 1 + "성적 총 평균 "+(double)sum/java[i].length);
+		}
+		
+		
+		
+		System.out.println();
+		System.out.println();
+		sum=0;
+		count=0;
+		int totalsum=0;
+	
+		for(i=0;i<java.length;i++) {
+			
+			for(j=0;j<java[i].length;j++) {
+				sum = sum +java[i][j];
+				count++;
+			}
+			totalsum = totalsum + sum;
+			System.out.println(i+1 + "반의 성적의 합 =" + sum + "점");
+			System.out.println(i+1 + "반의 성적의 평균 =" + (double) sum/java[i].length + "점");
+			
+			count+=java[i].length;
+			}
+		System.out.println("전체 성적의 합");
+	
+		System.out.println("---하나의 for로 합치기---");
+		
+		totalsum = 0;
+		count = 0;
+		
+		for (i=0;i<java.length;i++) {
+			sum=0;
+			for(j=0;j<java[i].length;j++) {
+				sum += java[i][j];
+				totalsum += java[i][j];
+				//count++;
+			}
+			System.out.println(i + 1 + "반 합=" + sum);
+			System.out.println(i + 1 + "반 평균=" + (double)sum / java[i].length);
+			
+			count+=java[i].length;
+		}
+		System.out.println("------------------------");
+		System.out.println("총 합" + totalsum);
+		System.out.println("총 평균" + (double)totalsum / count);
+	
+	
+	}
+	
+	
+}
