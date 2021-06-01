@@ -1,0 +1,31 @@
+package lasttest;
+
+import java.util.Scanner;
+
+public class MathTest2 {
+
+	public static void main(String[] args) {
+		//1.제곱 2.루트 3.로그
+		
+		Scanner sc = new Scanner(System.in);
+		String tap;
+		
+		ohter:while (true) {
+			System.out.println("**************");
+			System.out.println("(1) 제곱");
+			System.out.println("(2) 루트");
+			System.out.println("(3) 로그");
+		
+			System.out.println("원하는 계산(1~3)을 선택하세요(종료:stop)>");
+			String tmp = sc.next();
+			
+			if (tmp.equalsIgnoreCase("stop")) {
+				break;
+			}
+			
+		
+		}
+		
+	}
+
+}
