@@ -1,0 +1,19 @@
+package com.sangil8585.my_gugudan;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+
+public class GuguData {
+	// 필드 
+	private int dan;
+	private String oper1;
+	private int value;
+	private String oper2;
+	private int result;
+}
