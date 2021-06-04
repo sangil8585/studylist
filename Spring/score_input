@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<style>
+		table {
+			width: 400px;
+		}
+		table, td, th {
+			border: 1px solid blue;
+		}
+	</style>
+</head>
+<body>
+	<h3>성적 입력</h3>
+<form action="/score_add" method="POST">
+	<table>
+		<tr>
+			<td>
+				이름
+			</td>
+			<td>
+				<input type="text" name="name"> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				국어
+			</td>
+			<td>
+				<input type="text" name="guk"> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				산수
+			</td>
+			<td>
+				<input type="text" name="math"> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				사회
+			</td>
+			<td>
+				<input type="text" name="sahee"> 
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+				<input type="submit" value="저장"> 
+			</td>		
+		</tr>
+	</table>
+</form>	
+</body>
+</html>
