@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeelaf.org">
+<head>
+<meta charset="UTF-8">
+<title>구구단 입력</title>
+	<style>
+		table, td {
+			border: 1px solid blue;
+		}
+	</style>
+</head>
+<body>
+	<h3>구구단 표시</h3>
+	<table>
+		<tr th:each="guguData : ${guguDataList}"> <!-- th:컬럼="~~" -->
+			<td th:text=" ${guguData.getDan()}"> <!-- getDan() 또는  -->
+			</td>
+			<td th:text=" ${guguData.oper1}">
+			</td>
+			<td th:text=" ${guguData.value}">
+			</td>
+			<td th:text=" ${guguData.oper2}">
+			</td>
+			<td th:text=" ${guguData.result}">
+			</td>
+		</tr>
+	</table>
+	
+</body>
+</html>
