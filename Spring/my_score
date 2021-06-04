@@ -1,0 +1,60 @@
+package com.sangil8585.my_score;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class ScoreController {
+	
+	@Autowired  // DI(Dependecy Injection) 스프링이 자동으로 생성해 줌  
+	ScoreRepository scoreRepository;
+	
+	@GetMapping("/score_list")
+	public String score_list(
+			Model model
+			) {
+		long counts = scoreRepository.count();  // SELECT count(*) from score;
+		model.addAttribute("counts", counts);
+		
+		List<Score> scoreList = scoreRepository.findAll();
+		model.addAttribute("scoreList", scoreList);
+		
+		return "score_list";
+	}
+	
+	@GetMapping("/score_input")
+	public String score_show(
+			) {
+		
+		return "score_input";
+	}
+	
+	@PostMapping("/score_add")
+	public String score_add(
+			Model model,
+			@RequestParam String name,
+			@RequestParam int guk,   // 웹 페이지의 모든 데이터는 문자열임
+			@RequestParam int math,  // 스프링이 자동 변환해 줌 
+			@RequestParam int sahee
+			) {
+		Score score = new Score();
+		score.setName(name);
+		score.setGuk(guk);
+		score.setMath(math);
+		score.setSahee(sahee);
+		
+		Score resultScore = scoreRepository.save(score);
+		if(resultScore != null) {
+			return "redirect:/score_list";
+		}
+		
+		return "score_add";
+	}
+}
