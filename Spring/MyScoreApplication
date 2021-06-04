@@ -1,0 +1,13 @@
+package com.sangil8585.my_score;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class MyScoreApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(MyScoreApplication.class, args);
+	}
+
+}
