@@ -1,0 +1,37 @@
+package com.sangil8585.my_score;
+
+import javax.annotation.Generated;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name="score")
+public class Score {
+	
+	@Id  // pk(primary key: 기본키)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	
+	@Column(name="name")
+	private String name;
+	
+	@Column(name="guk")
+	private int guk;
+	
+	@Column(name="math")
+	private int math;
+	
+	@Column(name="sahee")
+	private int sahee;
+}
