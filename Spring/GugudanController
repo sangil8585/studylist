@@ -1,0 +1,56 @@
+package com.sangil8585.my_gugudan;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class GugudanController {
+
+	// 구성원(멤버)
+	// 데이터 : 움직이지 않는 정적인 데이터가 있음.
+	// 데이터를 조작하는 기능
+	// 자바에서는 데이터를 필드라고 함
+	// 데이터 조작 기능을 메서드라고 함
+	
+	@GetMapping("/dan_input")
+	public String dan_input() {
+		
+		return "dan_input";   
+	}
+	
+	@PostMapping("/dan_result")
+	public String dan_result(
+			Model model,
+			@RequestParam int dan  // String ---> int 형 변환 spring 이 
+			) {
+		// 5 × 1 = 5
+		// String.valueOf < > Integer.parseInt
+		// String gugudan = "";
+		List<GuguData> guguDataList = new ArrayList<>();
+		//기본 생성자
+		for(int i=1; i<=9; i++) {
+			GuguData guguData = new GuguData();
+			guguData.setDan(dan);
+			guguData.setOper1("x");
+			guguData.setValue(i);
+			guguData.setOper2("=");
+			guguData.setResult(dan * i);
+			
+			guguDataList.add(guguData);
+		}
+		// 확장 for문
+		for (GuguData g : guguDataList) {
+			System.out.println(g);
+		}
+				
+		model.addAttribute("guguDataList", guguDataList);
+		
+		return "dan_result";  
+	}
+}
