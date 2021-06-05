@@ -1,0 +1,85 @@
+package book;
+//라이브러리용 : main없는 클래스
+
+/*
+ * class앞에 public 있으면 어디서든지 import가 가능하다. 
+ *				   그러나 없으면 같은 패키지에서만 가능하다.
+ * 
+ * 
+ * [멤버변수, 메서드]
+ * 1. static 있는것 : Book 클래스가 메모리에 로딩될 때 초기화되어 올라감
+ * 					만약, 초기화값이 없으면 기본값으로 저장
+ * 
+ * 					그러나, final 있으면 반드시 최초의 1번은 "초기화"시켜줘야함
+ * 
+ * 					클래스이름. 접근(권장)
+ * 					객체주소. 접근(경고)
+ * 
+ * 2. static 없는 것 : 생성자를 통해 객체 생성되면 객체 안의 존재
+ * 					 반드시 객체의 주소로만 접근가능
+ */
+public class Book {
+	//1.맴버변수 = 필드 : 속성 - 멤버변수에값 대입방법(명시적대입, 기본값/생성자 )
+	//final:반드시 최초의 1번은 반드시 "초기화" => 값 변경 불가
+	static final int BOOKPRICE = 10000;//BOOKPRICE
+	
+	String bookName;//책 제목 무조건 객체
+	String author;//책 저자, 무조건 객쳊저자
+	
+	
+	/*
+	 * 2.생성자는 반드시 존재해야함.
+	 * <생성자 역할> 멤버변수에 값을 주어 객체 생성
+	 * 
+	 * 생성자가 없으면 컴파일하기전에, 컴파일러가 자동으로 기본생성자를 삽입
+	 * 생성자 {}안에 super();없으면 컴파일 하기전, 컴파일러가 자동으로 super(); 삽입(단, 첫줄에 삽입)
+	 * super(); 부모의 생성자를 호출 -> 부모 객체 생성
+	 * 
+	 * <기본생성자> public Book(){super();}
+	 * 			 기본값으로 채워진 맴버변수를 가진 객체 생성
+	 * 			 기본값-기본타입 : int(0), double(0.0), char('\0'), boolean(false)
+	 * 				 -클레스타입: String(null)
+	 */
+	
+	//3.메서드 : 기능
+	String getBookName() {
+		return this.bookName;//this: 자기자신의 주소
+	}
+	
+	void setBookName(String bookName) {//get: 가져오는것 set: 가져온걸 다른값으로 바꿔옴
+		this.bookName = bookName; //this가 자기 자신의 주소를 가지고있는데, 생략이 가능하다. 그 이유는 같은 클래스안에 있어서이다.
+	}							  //this는 매개변수와 맴버변수를 구분하기 위해서 생략을 할수없다. 
+	
+	String getAuthor() {
+		return author;
+	}
+	
+	void setAuthor(String author) {
+		this.author = author;
+	}
+	
+	static int getBookprice() {
+		return BOOKPRICE;
+	}
+	
+	void showBookInfo() {
+		System.out.println("책 제목="+this.bookName+", 책 저자="+author+", 책가격="+Book.BOOKPRICE);		
+	}//책제목과 저자에 this. 생략가능. 책가격=Book. 생략가능.
+	
+	
+	
+	/**
+	 * 다음주 월요일 6/7 11~12:50 시험
+	 * 시험치러 오셔야합니다.
+	 * 
+	 * 시험 : 6장 제외하고
+	 * ~5장까지
+	 * 힌트:4~5장 위주로 배운 소스 공부
+	 * 과제는 가장 최근들 과제로 공부
+	 * 
+	 * 
+	 */
+	
+	
+	
+}
