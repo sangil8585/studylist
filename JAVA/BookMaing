@@ -1,0 +1,26 @@
+package book;
+//실해용:main() 있는 것
+
+//같은 패키지의 클래스는 자동으로 import된다.
+public class BookMain {
+	//기본생성자
+	public static void main(String[] args) {
+		System.out.println("책 가격="+Book.BOOKPRICE);//book.java에서 bookprice를 임폴트한걸 가져올수있다.
+		
+		//Book.bookprice=10; //오류
+		System.out.println("책 가격="+Book.BOOKPRICE);
+		
+		Book b1=new Book();//기본생성자 호출되어 객체 생성
+		//System.out.println("책 제목="+b1.bookName+", 책 저자="+b1.author+", 책가격="+Book.BOOKPRICE);
+		
+		b1.bookName="뽀로로";//맴버변수에 직접 접근하여 값을 변경하는 방법
+		b1.author="이태한";
+		//System.out.println("책 제목="+b1.bookName+", 책 저자="+b1.author+", 책가격="+Book.BOOKPRICE);
+		
+		b1.setBookName("아기상어");
+		b1.setAuthor("김지호");
+		//System.out.println("책 제목="+b1.bookName+", 책 저자="+b1.author+", 책가격="+Book.BOOKPRICE);
+		b1.showBookInfo(); //book클래스에서 설정했기때문에 sys를 굳이 사용하지않아도 결과값이 나옴
+	}
+
+}
