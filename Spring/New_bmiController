@@ -1,0 +1,54 @@
+package com.sangil8585.bmi;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class BmiController {
+
+	@GetMapping("/")
+	public String bmi_input() {
+		
+		return "bmi_input";
+	}
+	
+	@PostMapping("/bmi_result")
+	public String bmi_result(
+			Model model,
+			//@RequestParam("height") int nHeight,  
+			@RequestParam int height,  // cm
+			@RequestParam int weight    // kg
+			) {
+		
+		model.addAttribute("height", height);
+		model.addAttribute("weight", weight);
+		
+		// 몸무게(kg) / 키(m) ^ 2
+		double dHeight = (double)height / 100.0;
+		double bmiValue = weight / Math.pow(dHeight, 2);
+		bmiValue = (double)Math.round(bmiValue * 10) / 10.0;
+
+		model.addAttribute("bmiValue", bmiValue);
+		
+		String bmiResult = "";
+		if (bmiValue < 20) {
+			bmiResult = "저체중";
+        }
+        else if (bmiValue < 25) {
+        	bmiResult = "정상";
+        }
+        else if (bmiValue < 30) {
+        	bmiResult = "과체중";
+        }
+        else if (bmiValue >= 30) {
+        	bmiResult = "비만";
+        }
+		
+		model.addAttribute("bmiResult", bmiResult);
+		
+		return "bmi_result";
+	}
+}
