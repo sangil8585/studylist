@@ -1,0 +1,18 @@
+package com.sangil8585.bmi;
+
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+public class Bmi {
+
+	private int height;  	// cm
+	
+	private int weight;  	// kg
+	
+	private double bmiValue; // 소수점 1째자리
+	
+	private String bmiResult;
+}
