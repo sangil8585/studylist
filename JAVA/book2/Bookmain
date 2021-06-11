@@ -1,0 +1,18 @@
+package book3;
+
+public class Bookmain {
+
+	public static void main(String[] args) {
+		Book b1=new Book();
+		System.out.println(b1);
+
+		//파이썬(직/간), 장수왕(직->간)
+		//b1.bookName="파이썬" //직접
+		b1.setBookName("파이썬");//간접
+		
+		b1.setAuthor("장수왕");
+		b1.showBookInfo();
+		
+	}
+
+}
