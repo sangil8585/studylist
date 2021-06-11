@@ -1,0 +1,23 @@
+package book2; //페키지가 다르니까 무조건 import해서 가져와야하고.가져오기위한 방법은 사용하고있는 클래스에 public을 꼭 붙여주어야한다.
+
+import book.Book;
+
+public class BookMain {
+	
+	public static void main(String[] args) {
+		//
+		Book b1 = new Book("스프링", "변상일", 333);
+		System.out.println(b1);//재정의 된 toString() 메서드를 호출한 리턴값을 받아 출력
+		
+		System.out.println("책제목"+b1.bookName);//직접 접근 - public 맴버변수이므로 가능
+		System.out.println("책제목"+b1.getBookName());//간접 접근 - public 메서드이므로 가능
+		
+		System.out.println("책저자"+b1.getAuthor());//간접 접근 - private 맴버변수이므로 가능 
+		
+		Book b2 = new Book("css", "변인아", 444);
+		
+		
+		//math.앞에 f1번 눌러서 도움말 확인
+		
+	}
+}
