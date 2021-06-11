@@ -1,0 +1,82 @@
+package book3;
+
+public class Book {
+	//1. 멤버변수=feild:속성
+	//책 가격:공시. 값 변경 불가, 어디서든지 접근 가능
+	
+	//책 제목 : 어디서든지 접근가능
+	//책 제목 : 정보를 보안
+	
+	//바코드 : 값 변경 불가 - 모든 객체 안의 바코드가 다른 값으로
+	public static final int BOOKPRICE=100000;
+	
+	public String bookName;
+	private String author;
+	
+	final int bacode;
+
+
+	
+	
+	//2. 생성자
+	//매개변수 없는 생성자
+	public Book() {
+		super();
+		bacode = 111;
+	}
+	
+	//매개변수 2개 생성자
+	public Book(String bookName, String author) {
+		super();
+		this.bookName = bookName;
+		this.author = author;
+		bacode = 222;
+	}
+	
+	//매개변수 3개 생성자
+	public Book(String bookName, String author, int bacode) {
+		super();
+		this.bookName = bookName;
+		this.author = author;
+		this.bacode = bacode;
+	}
+
+	//3. 메서드:get~set~
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public static int getBookprice() {
+		return BOOKPRICE;
+	}
+
+	public int getBacode() {
+		return bacode;
+	}
+
+	//맴버변수의 값을 출력하는 메서드
+	void showBookInfo(){ //밑에 리턴이 붙지 않을때는 void 붙여야함
+		System.out.println("책[bookName=" + bookName + ", author=" + author + ", bacode=" + bacode + ", 책 가격="+BOOKPRICE +"]");
+	}
+	
+	@Override
+	public String toString() {
+		return "Book [bookName=" + bookName + ", author=" + author + ", bacode=" + bacode + ", 책 가격="+BOOKPRICE +"]";
+	}
+	
+	
+	
+	
+}
