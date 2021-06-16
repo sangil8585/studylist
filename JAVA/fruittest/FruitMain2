@@ -1,0 +1,126 @@
+package fruittest;
+
+import java.util.Scanner;
+
+public class FruitMain2 {
+
+   public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+      String tmp = null;
+
+      Buyer b = new Buyer(20000, 10); // (20000, 10)
+      Seller s1 = new Seller("판매점1", 100, 1300, 1000);
+      Seller s2 = new Seller("판매점2", 50, 1700, 2000);
+
+      outer: while (true) {
+         System.out.println("(1) 판매점1");
+         System.out.println("(2) 판매점2");
+         System.out.print("선택하세요 (종료하려면 stop 입력):");
+
+         tmp = sc.next();
+         System.out.println();// 구분
+
+         if (tmp.equalsIgnoreCase("stop")) {
+            System.out.println("프로그램이 종료됩니다.");
+            break;
+         }
+
+         int menu = 0;// 지역변수는 초기화를 해줘야 함
+         try {
+            menu = Integer.parseInt(tmp);// "1.23""ㅁ" "a" / "1"->1 "2" "3"
+         } catch (NumberFormatException e) {
+            // e.printStackTrace();
+            System.out.println("잘못된 메뉴를 입력하셨습니다.");
+            continue;
+         }
+
+         if (!(1 <= menu && menu <= 2)) {
+            System.out.println("메뉴를 잘못 선택하셨습니다.");
+            continue;
+         }
+
+         if (menu == 1) {
+            System.out.println("====판매점 1에 입장하셨습니다.====");
+            b.askApplePrice(s1);
+            b.askNumofApple(s1);
+         } else { // else if (menu == 2) {
+            System.out.println("====판매점 2에 입장하셨습니다.====");
+            b.askApplePrice(s2);
+            b.askNumofApple(s2);
+         }
+         /**************************************************************/
+         inner: while (true) {
+            System.out.println("구매자 가진 돈은" + b.getMoney() + "원입니다.");
+            
+            if (b.getMoney() == 0) {
+               System.out.println("더 이상 사과를 구매할 수 없습니다.");
+               break outer;
+            }
+
+            System.out.print("구매할 사과의 개수를 입력하세요.(계산 종료:0):"); 
+
+            tmp = sc.next();// "5" "0" "-1"
+            
+            int num = 0;
+            try {
+               num = Integer.parseInt(tmp);
+            } catch (NumberFormatException e) {               
+               //e.printStackTrace();
+               System.out.println("잘못 입력하셨습니다.");
+               continue;
+            }
+            
+            if (num < 0) {//음수 처리
+               System.out.println("메뉴를 잘못 선택하셨습니다.");
+               continue;
+            }
+
+            if (num == 0) {
+               System.out.println("=======계산 종료=========");
+               b.showBuy();
+               break;
+            }
+
+            switch (menu) {
+            case 1:
+               int s1_APPLE_PRICE_Value = s1.APPLE_PRICE * num; // 판매처 1에서 내가 구매할 가격
+               if (b.getMoney() >= s1_APPLE_PRICE_Value) {
+                  b.buy(s1, s1_APPLE_PRICE_Value);
+
+                  System.out.println("사과 " + num + "개를 구입하셨습니다.");
+                  break;//switch문 빠져나감
+               } else {
+                  System.out.println("구매자의 잔액이 부족하여 사과를 살 수 없습니다.");
+                  break;
+               }
+            case 2:
+               int s2_APPLE_PRICE_Value = s2.APPLE_PRICE * num; // 판매처 2에서 내가 구매할 가격
+               if (b.getMoney() >= s2_APPLE_PRICE_Value) {
+                  b.buy(s2, s2_APPLE_PRICE_Value);
+                  System.out.println("사과 " + num + "개를 구입하셨습니다.");
+                  break;//switch문 빠져나감
+               } else {
+                  System.out.println("구매자의 잔액이 부족하여 사과를 살 수 없습니다.");
+                  break;
+               }
+            }// switch 종료
+
+         } // 계산종료:inner while문 종료
+         System.out.println("=======계산 종료=======");         
+      } // outer while문 종료
+      System.out.println("========판매 종료========");
+      
+      System.out.println();// 구분
+
+      System.out.println("=======구매자의 구매현황=======");
+      b.showBuy();
+      System.out.println();
+      
+      System.out.println("=======판매점1의 판매현황=======");
+      s1.showSale();
+      System.out.println();// 구분
+      
+      System.out.println("=======판매점2의 판매현황=======");
+      s2.showSale();
+   }
+}// 종료
