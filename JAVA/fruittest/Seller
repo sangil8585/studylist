@@ -1,0 +1,54 @@
+package fruittest;
+
+public class Seller {
+	//1. 멤버변수
+	//간판이름. 
+	public final String HOLA;//간판이름. 다르게. 값변경 불가. 어디서든지 접근가능
+	int firstMoney;
+	int numofApple;	//사과수. 다르게. 같은 패키지에서만 사용 가능하도록
+	int money;//돈. 다르게
+	final int APPLE_PRICE;//사과 가격. 다르게. 값변경 불가
+
+	//2. 생성자
+	public Seller(String hOLA, int numofApple, int money, int aPPLE_PRICE) {
+		super();
+		HOLA = hOLA;
+		this.numofApple = numofApple;
+		firstMoney = money;
+		this.money = money;
+		APPLE_PRICE = aPPLE_PRICE;
+	}
+	
+	//3. 메서드
+	void answer() {
+		System.out.println(APPLE_PRICE+" 입니다");
+	}
+	
+	
+	
+	void getNumofApple() {
+		System.out.println(numofApple+"개 남았습니다.");
+	}
+
+	int sale(int money){
+		int n = money/APPLE_PRICE;//5000/1000=5개
+		numofApple -= n;//사과수는 감소
+		this.money += money;//돈은 증가
+		return n;//5개 리턴
+	}
+	
+	//판매자의 현재상황
+	void showSale(){
+		System.out.println("판매 후 남은 사과 : "+numofApple);
+		System.out.println("판매자의 판매전 원금 : "+firstMoney);
+		System.out.println("판매자의 수익 : "+(money-firstMoney));
+		System.out.println("판매자가 가진 전체 돈 : "+money);
+	}
+
+
+	
+	
+	
+	
+	
+}
