@@ -1,0 +1,65 @@
+package fruittest;
+
+public class Buyer {
+	//1.맴버변수
+	//돈. 다르게. 
+	private int money; //돈. 다르게. 정보보안. 현재잔액
+	private int numofApple; // 구매자가 처음 가진 사과수 + 추가 구입한 사과수
+	private int firstnumofApple;//구매자가 처음 가진 사과수
+	private int firstMoney;//사과 구입전의 원금
+	
+	//2.생성자
+	public Buyer(int money, int numofApple) {
+		super();
+		this.money = money;
+		firstMoney = money;
+		this.numofApple = numofApple;
+		firstnumofApple = numofApple;
+		
+	}
+	
+	//3.메서드 : 구매자 주체
+	
+	void askApplePrice(Seller s){//판매자에게 사과 가격 물어보기
+		System.out.println("["+s.HOLA+"]"+" 1개에 얼마에요?");
+		s.answer();
+	}
+	
+	void askApplePrice2(Seller s){//판매자에게 남은 사과 수 물어보기
+		System.out.println("["+s.HOLA+"]"+" 몇 개에 남았어요?");
+		s.answer();
+	}
+	
+	
+	void buy(Seller s, int money){//(판매자, 돈)
+		numofApple+=s.sale(money);//사과수는 증가
+		this.money-=money;//돈은 감소
+	}
+	
+	void showBuy() {
+		System.out.println("구매한 사과수 : "+(numofApple-firstnumofApple));
+		System.out.println("구매자의 원금 : "+firstnumofApple);
+		System.out.println("구매자가 사과를 살 때 쓴돈 : "+(firstMoney-money));
+		System.out.println("구매자의 현재잔액 : "+money);
+	}
+
+	public int getFirstMoney() {
+		return firstMoney;
+	}
+
+	public void setFirstMoney(int firstMoney) {
+		this.firstMoney = firstMoney;
+	}
+
+	public void askNumofApple(Seller s1) {
+		
+		
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+
+
+}
