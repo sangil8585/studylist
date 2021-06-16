@@ -1,0 +1,68 @@
+package fruittest;
+
+import java.util.Scanner;
+import static java.lang.Math.*;
+
+public class FruitMain {
+
+	public static void main(String[] args) {
+		//구매자 생성
+		Buyer b=new Buyer(10000, 10);
+		
+		//판매자 생성
+		Seller s1 = new Seller("판매자1", 100, 1300, 1000);
+		Seller s2 = new Seller("판매자2", 50, 1700, 2000);
+		
+		//구매자가 주제
+		b.askApplePrice(s1);
+		b.askApplePrice(s2);
+		
+		/**6-14 과제 : MathTest.java참조 - 반복문(구매자의 남은 돈이 0이거나 stop을 입력하면 반복문이 끝남)***/ 
+		Scanner sc = new Scanner(System.in);
+		int num = 0;
+		String tmp;
+		do {
+			System.out.print("원하시는 사과의 수를 입력하세요. 종료는 stop> ");
+			tmp = sc.next();
+			if(!(tmp.equalsIgnoreCase("stop"))) {
+				try {
+					num = Integer.parseInt(tmp);
+				} catch (NumberFormatException e) {
+					System.out.println("잘못된 수를 입력하셨습니다.");
+					continue;
+				}
+				if(b.getFirstMoney() > (num*s2.APPLE_PRICE)) {
+					System.out.println("사과를 " + num +"개 구매합니다.");
+					b.buy(s2, s2.APPLE_PRICE*num);
+					break;
+				} else {
+					System.out.println("잔액이 부족합니다. 다시 값을 입력하세요.");
+					continue;
+				}
+			}else {
+				System.out.println("잔액이 부족합니다.");
+				break;
+			}
+		}while (num != 0);
+		
+		
+//		b.buy(s1, s1.APPLE_PRICE*5);//사과를 5개 사고싶다면, 오천원을 준다.
+		System.out.println();
+		
+		b.askApplePrice(s2);
+		b.askApplePrice(s2);
+//		b.buy(s1, s2.APPLE_PRICE*5);//사과를 5개 사고싶다면, 만원을 준다.
+		System.out.println();
+		
+		System.out.println("-----------구매자1의 현재상황------------");
+		b.showBuy();
+		
+		System.out.println("-----------판매자1의 현재상황------------");
+		s1.showSale();
+		
+		System.out.println("-----------판매자2의 현재상황------------");
+		s2.showSale();
+		
+	}
+
+}
