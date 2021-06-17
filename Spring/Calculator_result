@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>간단한 계산기</title>
+</head>
+<body>
+
+	<table>
+		<tr>
+			<td>
+				값1
+			</td>
+			<td>
+				<input type="text" th:value="${first_value}" readonly>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				값2
+			</td>
+			<td>
+				<input type="text" th:value="${second_value}" readonly>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				결과
+			</td>
+			<td>
+				<input type="text" th:value="${result}" readonly>
+			</td>
+		</tr>
+	</table>
+	<a href="/">처음으로</a>
+	
+</body>
+</html>
