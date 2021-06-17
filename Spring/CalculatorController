@@ -1,0 +1,67 @@
+package com.sangil8585.calculator;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Controller
+public class CalculatorController {
+
+	@GetMapping("/ca")
+	public String cal_input() {
+		
+		return "cal_input";
+	}
+	
+	@PostMapping("/cal_result")
+	public String cal_result(
+			Model model,
+			@RequestParam int first_value,
+			@RequestParam int second_value,
+			@RequestParam String operator
+			) {
+
+//		if (operator.equals("＋")) {
+//			System.out.println("＋");
+//		}
+//		else if(operator.equals("－")) {
+//			System.out.println("－");
+//		}
+		// scope 
+		double result = 0.0;
+		
+		switch(operator) {
+		case "＋":
+			result = first_value + second_value;
+			break;
+		case "－":
+			result = first_value - second_value;
+			break;
+		case "×":
+			result = first_value * second_value;
+			break;
+		case "÷":
+			result = first_value / second_value;
+			break;
+		}
+		
+		model.addAttribute("first_value", first_value);
+		model.addAttribute("second_value", second_value);
+		model.addAttribute("result", result);
+		
+		return "cal_result";
+	}
+	
+	@GetMapping("/cal_test/{id}")
+	public String cal_test(
+			@PathVariable String id
+			) {
+		System.out.println(id);
+		return "cal_result";
+	}
+	
+	
+}
