@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>간단한 계산기</title>
+</head>
+<body>
+<form action="/cal_result" method="post">
+	<table>
+		<tr>
+			<td>
+				값1
+			</td>
+			<td>
+				<input type="text" name="first_value">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				값2
+			</td>
+			<td>
+				<input type="text" name="second_value">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" name="operator" value="＋">
+				<input type="submit" name="operator" value="－">
+				<input type="submit" name="operator" value="×">
+				<input type="submit" name="operator" value="÷">
+				
+				<a th:href="@{/calc_test/{id}(id = '11111')}">
+				  결과 창
+				</a>
+				
+			</td>
+			
+		</tr>
+	</table>
+</form>	
+</body>
+</html>
