@@ -1,0 +1,340 @@
+/* <ArrayList로 처리 - '환불'부분 없음>
+ * [추상클래스]=[이넡페이스] 공통된 특징
+ * 1. 미완성된 추상 메서드가 존재하므로 객체 생성 불가
+ *    미완성된 추상 메서드는 반드시 자식에서 재정의를 해줘야 한다.
+ *    안하면 오류가 발생한다.
+ *    그런데 재정의를 하지않으면 그 클래스를 추상 클래스로 만들면 된다.
+ *    오류 해결방법 : 1. 재정의 
+ *    			  2. 추상클래스로 만들면됨
+ *     
+ * 2. 부모 역할 가능함
+ * 	  자식 객체를 부모타입으로 자동형변환하여 받아들일 수 있다.
+ * 	  (예1) method(Product e){//Product의 자식객체(TV, Computer, Audio)->자동으로 Product 형변환되어 대입
+ * 	  
+ * 	  		}
+ * 
+ *    (예2) Product p =new TV(); Product e = new Computer(); Product p=new Audio();
+ *    
+ * [추상 클래스만의 특징]
+ * 1. 여러 메서드 중 단 1개라도 미완성된 추상 메서드가 있으면 이 클래스는 추상 클래스가 된다.
+ * 
+ * [인터페이스만의 특징]
+ * 1. 맴버변수(=필드)가 모두 상수
+ *    int A = 1; //public static final 생략 가능
+ * 2. 메서드가 모두 다 미완성된 추상 메서드
+ * 		void a();  //public abstract 생략
+ *      ☆예외1 : static 메서드-자체로 완성된 메서드
+ *      		=>자식 클래스에서 재정의 못함 
+ *      ☆예외2 : default 메서드(정석 401p) - 자체로 완성된 메서드
+ *      		=> 자식 클래스에서 재정의를 원하는 자식 클래스에서만 재정의 하면 됨
+ */
+
+package saleinterface;
+
+import java.util.Scanner;
+
+interface ProductInter {
+	//필드가 상수
+	int TV=1, COUMPUTER=2, AUDIO=3;//상수값 //public static final이 생략 되어있다.
+	
+	//메서드 - 모두 다 추상 메서드(예외 2개)
+	//예외1. static 메서드는 추상 메서드가 될 수 없음(재정의 할 필요없음 아니 아에 못함)
+	static void buyerEnter() {
+		System.out.println("구매자가 전자마트에 입장하셨습니다.");	
+	}
+	
+	//예외2. default 메서드 - 완성된 메서드이므로 자식 클래스에서 재정의 안해도 된다. 원하면 재정의 해도 됨. 
+	default void defaultmethod() {}
+	
+	//그 외 메서드는 추상 메서드로 존재 합니다.
+	void menu(); //public abstract 생략 : 반드시 자식 클래스에서 재정의해야 함.
+}
+
+abstract class Product{//제품 - 부모:자식의 공통된 특성
+	//부모의 필드: 자식의 공통된 속성
+	final String makeCountry="대한민국";//제조국
+	int price;//제품가격 200
+	int bonusPoint;//제품의 포인트 20
+	
+	//public product() {}
+	
+	public Product(int price) {//가격이 있는 제품 생성
+		super();
+		this.price = price;
+		bonusPoint = (int)(price/10.0);//가격이 153이면 10.0으로 나누면 15.3
+	}
+	
+	//미완성된 추상 메서드 : 필드의 값을출력
+	abstract void show(); //반드시 자식이 재정의해서 사용 
+}
+
+class TV extends Product{
+	//부모로부터 상속받은 플드 + 추가 필드
+	final String maker="삼성";
+	
+	
+	
+	//기본생성자 TV(){super();} //매게변수가 없는 부모의 부모생서자가 없기때문이다,
+	
+	public TV() {
+		super(200);//200
+		
+	}
+
+	@Override
+	void show() {
+		System.out.println("TV 제조국"+makeCountry+", TV 제조사:"+maker+", TV 가격:"+price+", TV 보너스포인트: "+bonusPoint);
+		
+	}
+
+	@Override
+	   public String toString() {
+	      
+	      return "TV";
+	   }
+}
+
+class Computer extends Product{
+	//부모로부터 상속받은 플드 + 추가 필드 없음
+	final String brand="SAM 오디세이";
+	
+	public Computer() {
+		super(100);//200
+		
+	}
+
+	@Override
+	   public String toString() {
+	      
+	      return "Computer";
+	   }
+	
+	@Override
+	void show() {
+		System.out.println("Computer 제조국"+makeCountry+", Computer 제조사:"+brand+", "
+						 + "Computer 가격:"+price+", TComputer 보너스포인트: "+bonusPoint);
+		
+	}
+	
+}
+
+class Audio extends Product{
+
+	
+	public Audio() {
+		super(50);//200
+		
+	}
+	
+	@Override
+	   public String toString() {
+	      
+	      return "Audio";
+	   }
+	
+	@Override
+	void show() {
+		System.out.println("Audio 제조국"+makeCountry+", Audio 가격:"+price+", "
+				+ "Audio 보너스포인트: "+bonusPoint);
+		
+	}
+	
+}
+
+class Buyer { //public 못붙임 매인에 붙여버렸기 땜시...
+	int money;//돈
+	int bonusPoint=0;//구매자 보너스 //명시적으로 =0을 넣는 이유는 보너스포인트가 0부터시작하는구나 하고 이해하기위해
+	
+	//구매자의 제품 목록(배열 : 반드시 같은 타입만 저장, 크기가 고정됨. 추가와 삭제에 대한 코드를 직접 장성해줘야 하는 번거로움)
+	Product[] item = new Product[10]; //product는 추상..
+	//구매자는 최대 10개까지 제품을 살수 있음.
+	//돈을 가진 구매자
+	Buyer(int money) {
+		super();
+		this.money = money;
+		//나머지 맴버변수는 기본 값으로 채워진다.
+	}
+	
+	//제품에 대해 물어본다.
+	void askInfo(Product p) {//Product의 모든 자식 객체를 Product 타입으로 형변환 하여 받아 들임.
+		System.out.println(p+"제품에 대한 정보 부탁드립니다.");
+		p.show();//부모거에 덮어씌운 자식 메서드 
+	}
+	
+	//제품을 산다. 구매자
+	int i=0;
+	void buy(Product p) {//자식 객체 p가 item이 참조하는 0 index에다 넣어야됨 그럼 0,1,2,3,4라는 인덱스 변수 선언해아함
+						 //자식객체들(TV, Computer, Audio) 중 하나
+		if(this.money < p.price) {
+			System.out.println("금액이 부족하여" +p+ "제품을 구매할 수 없습니다.");
+			return;//해당 매서드(buy 메서드) 종료 //System.exit(0); 프로그램 종료
+		}
+		
+		this.money-=p.price;//this 생략가능. 왜? 매개변수가 아니라 맴버변수기 때문.
+		bonusPoint += p.bonusPoint;//구매가의 돈은 제품의 가격만큼 감소되겠지만 구매자의 보너스 점수는 증가
+		
+		item[i++]=p;//배열목록에 제품을 추가 후 i값 1증가
+		//i++;
+		//지역변수는 스택메모리에 생겼다 사라졌다 반복함.
+	}
+	
+	//구매한 정보 요약
+	void summary() {
+		int sum=0;//구매한 제품 가격 합계
+		String itemlist="";//지역변수 //구매한 제품 목록들(예)TV, computer
+		//반복문을 이용해서 구입한 제품의 '총 가격'과 '목록'을 만든다.
+		int cntTV=0, cntCom=0, cntAud=0;//★각 제품을 몇 대 샀는지 카운팅 변수
+
+		 for(i=0;i<item.length;i++) {
+	         if(item[i]==null) break;
+	         
+	         sum += item[i].price; //아이템 i개수에 price를 참조해서 sum에 누적시킬것.
+			
+	         //            ""   + 조건연산자  (조건 )? 참       :  거짓
+	         itemlist = itemlist + ((i==0)? ""+item[i] : ", "+item[i]);//""->""+TV객체 주소+", "+Computer객체 주소         
+	      
+	           /* 
+	          String strP="";
+	           try {
+	              strP = item[i].getClass().getSimpleName();
+	           } catch (Exception e) {
+	               break;
+	           }
+	           */
+	         
+	         switch(item[i].toString()) { //switch(strP) {        
+	            case "TV": cntTV++;  break;                 
+	            case "Computer": cntCom++; break;
+	            case "Audio": cntAud++; break;        
+	            }
+	      }
+
+		//출력
+		 if(itemlist.length() != 0) {
+	           System.out.println("구입하신 제품의 총 금액은 "+sum+"만원입니다. ");
+	           System.out.println("구입하신 제품은 [" + itemlist + "]이고 ");         
+	         
+	           String itemcnt=""; 
+	       
+	           if(cntTV>0) itemcnt +=  "TV: "+ cntTV + "대, "; 
+	           if(cntCom>0) itemcnt += "Computer: "+ cntCom + "대, "; 
+	           if(cntAud>0) itemcnt += "Audio: "+ cntAud + "대, ";        
+	      
+	           itemcnt=itemcnt.substring(0, itemcnt.length()-2);
+	           System.out.println(itemcnt+"입니다.");
+	         
+	        }else System.out.println("구매자는 제품을 구매하지 않았습니다.");    
+	         
+	   }//summary 끝   
+	}
+
+
+//1개의 파일에 여러개의 클래스가 있따면 public 붙일 수 있는 클래슨느 단 1개뿐이다.
+//public을 붙일수 있는 우선순위
+//1. main() 실행용 클래스, 그래고 파일명도 이것과 같이 해아함.
+public class ArrayListInterface implements ProductInter {
+		//필드
+	
+		//기본생성자 public ArrayListInterface() {super();}
+		
+		/*
+		 * 1. 접근제한자는 부모와 같거나 넓게 된다
+		 * 	  재정의 할때는 반드시 부모의 return타입, 메서드명(매게변수)이 같아야한다.
+		 * 	  jdk1.5부터 수정된게 있음. ex)부모의 리턴타입(Object)을 자식 클래스 타입으로 변경가능함
+		 *    (단, return (자식타입:point로)obj; )
+		 * 2. 접근제한자는 부모와 같거나 넓은 범위로
+		 * 3. static 있는 메서드 -> static 없는 메서드 (x)
+		 * 	  static 없는 메서드 -> static 있는 메서드 (x)
+		 * 4. 예외는 조상 클래스의 메서드보다 많이 선언 할 수 없다. 
+		 */
+		@Override
+		public void menu() {//static 붙이면 오류
+			System.out.println();//구분
+			System.out.println("*************가전 제품 목록**************");
+			System.out.println("1.TV		2.Computer 	   	  3.Audio");
+			
+		}
+		public static void main(String[] args) {
+			
+			Scanner sc = new Scanner(System.in);
+			
+			//1000만원 가진 구매자 생성
+			Buyer b =new Buyer(1000);
+			
+			//구매자가 전자마트에 입장
+			ProductInter.buyerEnter();
+			//          .static(메서드)
+			
+			TV TV = new TV();
+			Computer com = new Computer();
+			Audio audio = new Audio();
+			
+			String tmp = null; //지역변수는 초기화를 스스로 해줘야함
+			int num=0;
+			
+			
+			
+			//6-16 과제 : 복습, main() 아래 못한 부분을 코딩해보기.
+			//1. 사용자로부터 숫자를 입력받아
+			//2. TV->정보물어보기->제품을 산다
+			//3. summary();w
+			
+			ArrayListInterface a = new ArrayListInterface();
+			
+			while (b.money != 0) {
+		         a.menu();
+		         System.out.print("원하시는 가전제품 번호를 입력하세요. 종료는 stop >");
+		         tmp = sc.next();
+		         
+		         if (tmp.equalsIgnoreCase("stop")) break;         
+		         
+		         try {
+		            num = Integer.parseInt(tmp);//"1.23" "ㅁ" "a" :예외발생
+		         } catch (NumberFormatException e) {
+		            System.out.println("잘못된 값입니다. 번호를 입력해주세요.");
+		            continue;
+		         }
+		         if (!(1 <= num && num <= 3)) {
+		            System.out.println("잘못된 번호입니다. 다시한번 입력해주세요.");
+		            continue;
+		         }
+
+		         switch (num) {//1 2 3
+		         case ProductInter.TV: //1
+		            b.askInfo(TV);
+		            if (b.money >= TV.price) {
+		               b.buy(TV);
+		               System.out.println("남은 돈은 " + b.money + "만원입니다.");
+		               break;
+		            } else {
+		               System.out.println("금액이" + (TV.price - b.money) + "만원만큼 부족합니다.");
+		               break;
+		            }
+		         case ProductInter.COUMPUTER: //2
+		            b.askInfo(com);
+		            if (b.money >= com.price) {
+		               b.buy(com);
+		               System.out.println("남은 돈은 " + b.money + "만원입니다.");
+		               break;
+		            } else {
+		               System.out.println("금액이" + (com.price - b.money) + "만원만큼 부족합니다.");
+		               break;
+		            }
+		         case ProductInter.AUDIO: //3
+		            b.askInfo(audio);
+		            if (b.money >= audio.price) {
+		               b.buy(audio);
+		               System.out.println("남은 돈은 " + b.money + "만원입니다.");
+		               break;
+		            } else {
+		               System.out.println("금액이" + (audio.price - b.money) + "만원만큼 부족합니다.");
+		               break;
+		            }
+		         //default : System.out.println("해당 제품은 없습니다.");필요없음. 위에서 이미 걸러내서 num에 정수 1 또는 2 또는 3만 존재하므로
+		         }
+		      } // while문끝
+		      
+		      System.out.println("\n************ 가전제품 판매를 종료합니다. ************");
+		      b.summary();
+		   }
+		}
