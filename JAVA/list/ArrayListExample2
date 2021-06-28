@@ -1,0 +1,84 @@
+/*컬랙션 프레임 어크 : 배열의 문제점을 해결하고 널리 알려진 어떤 자료구조를 바탕으로 객체들을 효율적으로
+ * 추가나 삭제나 검색 할 수 있도록 java.util패키지에 컬랙션과 관련된 인터페이스와 클래스들을 포함 시켜
+ * 놓고 이들을 총칭해서 프레임워크라 부른다. 
+ * 
+ *	 		Collection인터페이스
+ * 					|
+ * 			|---------------|
+ * 		   list			set인터페이스				  00Map인터페이스
+ * 			|				|						   |
+ *	 순서를 유지하고 저장		순서를 유지하지 않고 저장		키는 값의 쌍으로 저장
+ *	 중복저장가능			중복 저장 안됨				키는 중복x, 값 중복o
+ * 
+ * ----------------------------------------------------------------------------------
+ * List인터페이스를 구현한 클래스 :<공통점> index가 있어서 순서O => for문 사용가능 중복허용.
+ * 1. ArrayList : 앞에서부터 차례대로 추가나 검색할 때는 효율적, 중간에 추가나 삭제가 빈번히 일어나면 비효율적
+ * 2. LinkedList: 중간에 추가나 삭제가 빈번히 일어나는 곳에서는 효율적임. 근데 검색을 할 때는 비효율적.
+ * 3. Vector 	: ArrayList와 특징이 같다. 단, 멀티쓰레드에 사용
+ */
+package list;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+
+
+
+public class ArrayListExample {
+
+	public static void main(String[] args) {//<E> 타입이 결정되지 않았을 때
+		//부모인터페이스도 부모역할을 한다 = ArrayList->부모인 List타입으로 자동으로 형변환되어 대입
+		List<String> list=new ArrayList<String>();//E탑입은 객체가 생성될 대 타입이 결정됨
+		//List<String> list=new LinkedList<String>();
+		//List<String> list=new Vector<String>();//멀티 스레드일경우 백터로 바꿔준다.
+		int i;
+		for(i=0;i<list.size();i++) {
+			System.out.println(i+":"+list.get(i));
+		}
+		
+		System.out.println("----추가 후 값을 얻기----");
+		list.add("여러분");//0
+		list.add("힘내세요!");//1 ->2
+		list.add(":)");//2 ->3
+		list.add("여러분");//중복 허용
+		
+		list.add(1,"모두"); //인덱스 위치를 정해주면 위에 인덱스가 자동으로 밀림
+							//중간에 삽입과 삭제가 빈번히 발생할 경우 ArrayList보다 
+							//LinkedList사용하는 것이 컴퓨터 속도 효율이 더 높다
+		System.out.println("총 객체수 : "+list.size());//4
+		
+		System.out.println("2: "+list.get(2));
+		
+		//int i;
+		for(i=0;i<list.size();i++) {
+			System.out.println(i+": "+list.get(i));
+		}
+		
+		System.out.println("----삭제-1(인덱스)----");
+		String s1=list.remove(4);
+		System.out.println("인덱스 4 삭제한 문자열 : "+s1);
+		
+		for(i=0;i<list.size();i++) {
+			System.out.println(i+": "+list.get(i));
+		}
+		
+		System.out.println("----삭제-1(객체)----");
+		if(list.remove("정말~")) System.out.println("찾아서 있으면 삭제 후 true");//참또는 거짓을 결과로 가지는 조건은 넣을수있음
+		else System.out.println("찾아서 없으면 false - > 삭제안됨");
+		
+		System.out.println("----모두 삭제----");
+		list.clear();
+		
+		for(i=0;i<list.size();i++) {
+			System.out.println(i+": "+list.get(i));
+		}
+		
+		if(list.isEmpty()) System.out.println("참조하는 객체 없음");
+		else System.out.println("참조하는 객체 있음");
+		//list.isEmpty(); //for문이 비어있는지 확인할때쓰는법
+		
+		
+	}
+
+}
