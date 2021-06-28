@@ -1,0 +1,68 @@
+package list;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class ArraysAsListTest {
+
+	public static void main(String[] args) {
+		String[] s = {"a", "b"};//배열 선언과 동시에 초기화
+		
+/*
+ * ArrayList : 배열처럼 선언과 동시에 초기화가 불가능하다.(기본값이 null로 채워짐)
+ * 			   그러나 추가나 삭제가 가능 (그러나 추가나 삭제 등은 메서드를 통해 쉽게 사용가능하다.)
+ * 			   	
+ * Arrays : 배열을 조작하기 위해 나온 클래스
+ * 			배열처럼 선언과 동시에 초기화 가능하다.
+ * 			그러나 추가나 삭제가 불가능
+ * 그래서 '배열처럼 선언과 동시에 초기화'가 되고
+ * '추가나 삭제를 사용'할 수 있도록 아래 소스에서 방법을 알려주겠다.
+ */
+
+/* 1. Arrays.asList()이용하여 순차적으로 입력된 값(초기값)으로 고정된 객체 List객체 생성
+ * (아직 추가나 삭제 메서드는 사용 불가. why?List는 인터페이스이므로 미완성된 추상 메서드이므로 사용불가)
+ */
+		
+		List<String> list1=Arrays.asList("변상일","석선주","여민기");
+		
+		for(String name:list1) {
+			System.out.println(name);
+		}
+
+		//2.이렇게 만들어진 List 객체로 ArrayList 객체 생성
+		list1=new ArrayList<String>(list1);
+		
+		int i;
+		for(i=0;i<list1.size();i++) {
+			System.out.println(i+":"+list1.get(i));
+		}
+		
+		System.out.println("------------------------------------------");
+		
+		list1.add("이인원");//추가
+		System.out.println("인덱스1 문자열 삭제 : "+list1.remove(1));
+		
+		for(String name:list1) {
+			System.out.println(name);
+		}
+
+		System.out.println("------------------------------------------");
+		
+		List<Integer> list2 = Arrays.asList(1,2,3);
+		//자동으로 하는법//기본타입->'자동 inboxing'(박스안에 담는다)하여->Wrapper클래스 중 Integer객체로 만들어줌
+		
+		
+		List<Integer> list3 = Arrays.asList(new Integer(4), new Integer(5), new Integer(6));
+		//수동으로 하는법
+		
+		//'Integer객체'->'자동 unboxing'하여->기본타입으로 변환
+		for(int value : list3) {
+			System.out.println(value);
+		}
+		
+		
+		
+	}
+
+}
