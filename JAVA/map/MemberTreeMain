@@ -1,0 +1,25 @@
+package map.treemap;
+
+import set.membertree.Member;
+
+public class MemberTreeMain {
+
+	public static void main(String[] args) {
+		MemberTreeMap mtm=new MemberTreeMap();
+		
+		mtm.addMember(new Member(3, "강수현"));
+		mtm.addMember(new Member(1, "김지호"));
+		mtm.addMember(new Member(2, "백승윤"));
+		
+		mtm.showAllMember();//보여줌
+		
+		mtm.addMember(new Member(3, "변상일"));//아이디(키)가 중복->Map의 특징 : 값이 마지막 값으로 변경. 즉, 이름 변경됨
+		
+		mtm.showAllMember();//보여줌
+		
+		mtm.removeMember(3);
+		
+		mtm.showAllMember();//보여줌
+	}
+
+}
