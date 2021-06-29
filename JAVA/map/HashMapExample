@@ -1,0 +1,94 @@
+/*
+ * Map 인터페이스
+ * 1.키와 값을 구성된 Map.Entry 객체를 저장
+ * 2.키와 값은 모두 객체
+ * 3.키는 중복X, 값은 중복O
+ * 4.만약 기존에 저장된 키와 동일 키로 값을 저장하면 기존의 값은 없어지고 새로운 값으로 대체된다.
+ */
+
+package map;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+public class HashMapExample {
+
+	public static void main(String[] args) {
+		//Map컬렉션 생성했다고 표현<키, 값>
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+		//객체 저장
+		map.put("최성웅", new Integer(98));
+		map.put("홍길동", 85);//기본타입을->'자동 boxing'하여->Wrapper클래스 중 'Integer객체' 생성
+		map.put("이순신", 92);
+		map.put("홍길동", 95);//"홍길동"키가 같으면	 제일 마지막에 저장된 95값으로 대치
+		
+		System.out.println("총 Entry 수 : "+map.size());
+		
+		//키(이름)로 값(점수)을 검색하는 방법
+		System.out.println("홍길동의 점수: "+map.get("홍길동"));
+		System.out.println();
+		
+		/*******저장된 전체 객체를 대상으로 키와 값을 얻고 싶을 때(4가지 방법)********/
+		/*------ keySet() : 반복자, 향상된for -------------------------*/
+		Set<String> kSet = map.keySet();
+		
+		System.out.println("방법-1 : keySet() -> 반복자를 이용");
+		
+		//keySet()로 모든 키를 Set컬렉션으로 만든 다음
+		Iterator<String> itr = kSet.iterator();//iterator라는 메서드를 통해서 키의 반복자를 통해 String을 가르키는 반복자(지팡이) 
+		
+		Iterator<String> itr1 =map.keySet().iterator();//2줄(36,41라인)을 1줄 해결함
+		while(itr.hasNext()) {//키가 있으면
+			String key=itr.next();//하나씩 키를 next()로 가져와
+			int value = map.get(key);//그 키에 해당하는 값을 얻는다.
+			
+			System.out.println(key+"의 점수 : "+value);
+		}
+		System.out.println();//구분
+		
+		System.out.println("방법-2 : keySet() -> 향상된 for를 이용");
+		for(String key:kSet) {
+			System.out.println(key+"의 점수 :"+map.get(key));
+		}
+		System.out.println();//구분위한 빈줄
+		
+		System.out.println("홍길동의 삭제된 점수:"+map.remove("홍길동"));//리턴되는 결과로 값을 돌려준다.
+		
+		System.out.println("총 Entry 수:"+map.size());
+		System.out.println();
+		
+		/*------ entrySet() : 반복자, 향상된for -------------------------*/
+		Set<Entry<String, Integer>> eSet = map.entrySet();//entrySet()메소드로 모든Map.Eetry컬랙션으로 얻은 다음
+		
+		System.out.println("방법-3 : entrySet() -> 반복자 이용");
+		
+		Iterator<Entry<String, Integer>> eitr = eSet.iterator();//<키, 값>의 반복자를 통해
+		
+		Iterator<Entry<String, Integer>> eitr1 = map.entrySet().iterator();//2줄(65,69번째줄)을 ->한줄로 해결
+		while(eitr1.hasNext()) {
+			Entry<String, Integer> e = eitr1.next();//Map.Entry 하나씩 얻고
+			String key = e.getKey();//키와
+			Integer value = e.getValue();//키와 값을 각각 얻는다.
+			
+			System.out.println(key+"의 점수"+value);
+		}
+		System.out.println();
+		
+		System.out.println("방법-4 : entrySet() -> 향상된for 이용");
+		for(Map.Entry<String, Integer> entry:eSet) {
+			System.out.println(entry.getKey()+"의점수 : "+entry.getValue());
+		}
+		System.out.println();
+		
+		map.clear();
+		System.out.println("총 Entry 수:"+map.size());
+		
+		if(map.isEmpty()) System.out.println("모두 삭제됨");
+		else System.out.println("삭제되지 않음");
+	}
+
+}
