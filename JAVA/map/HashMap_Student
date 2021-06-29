@@ -1,0 +1,21 @@
+package map.student;
+
+import java.util.HashMap;
+
+public class HashMap_Student {
+
+	public static void main(String[] args) {
+		HashMap<Student, Integer> map=new HashMap<Student, Integer>();
+		
+		map.put(new Student(1, "홍길동"), new Integer(85));//학번과 이름이 동일한 Student를 키로 저장
+		map.put(new Student(1, "홍길동"), 85);//키가 중복되고 값도 중복되어 추가안됨
+		
+		System.out.println("총 Entry 수:"+map.size());
+		
+		map.put(new Student(1, "홍길동"), 95);//85->95로 값만 변경
+		System.out.println("학번1 홍길동의 점수 : "+map.get(new Student(1, "오길동")));
+		
+		System.out.println("총 Entry 수:"+map.size());
+	}
+	
+}
