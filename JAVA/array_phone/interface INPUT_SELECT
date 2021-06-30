@@ -1,0 +1,9 @@
+package array_phone;
+
+public interface INPUT_SELECT {
+//	     일반		   대학	    회사
+	int NORMAL=1, UNIV=2, COMPANY=3;
+	
+	
+	
+}
