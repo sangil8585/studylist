@@ -1,0 +1,7 @@
+package array_phone;
+
+public class PhoneSizeException extends Exception{
+	public PhoneSizeException() {
+		super("고객님~ 더 이상 저장할 공간이 없습니다.");
+	}
+}
