@@ -1,0 +1,14 @@
+package hashset_swing_phone;
+
+public class MenuChoiceException extends Exception{
+	int wrongChoice;// 잘못된번호
+
+	public MenuChoiceException(int wrongChoice) {
+		super("잘못된 선택입니다.");//getMessage() 리턴받는 메세지 문자열
+		this.wrongChoice = wrongChoice;
+	}
+
+	public void showWrongChoice() {
+		System.out.println(wrongChoice+"에 해당되는 선택은 존재하지 않습니다.");
+	}
+}
