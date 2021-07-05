@@ -1,0 +1,364 @@
+package hashset_swing_phone;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
+
+/*
+ * Object로 입출력하기 위해서.
+ * 표시하는 이유 : 직렬화가 가능한 클래스임을 알려줘서 객체 상태로 입출력하기 위해서
+ */
+class PhoneInfo implements Serializable{
+	String name;//이름
+	String phoneNumber;//전화번호
+	
+	PhoneInfo(String name, String phoneNumber) {
+		super();
+		this.name = name;
+		this.phoneNumber = phoneNumber;
+	}
+	
+	void showPhoneInfo() {
+		System.out.println("이름 : "+name);
+		System.out.println("전화번호 : "+phoneNumber);
+	}
+
+	final public String getName() {
+		return name;
+	}
+
+	@Override
+	public String toString() {
+		return "일반동기 [이름=" + name + ", 전화번호=" + phoneNumber + "]\r\n";
+		// 줄바꿈 : 리눅스 운영체제에서도 \n의 \r을 인식할수 있도록 하기 위해서
+	}
+	
+	/*
+	 * 같은 이름과 같은 전화번호가 중복되어 저장되지 않도록 
+	 * Object로 부터 상속받은 hashCode()와 equals()를 주소가 아니라 '값을 비교'하도록 재정의 해야한다.
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hash(name, phoneNumber);//1->'1'
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		PhoneInfo cmp=(PhoneInfo)obj;
+		if(this.name.equals(cmp.name) && this.phoneNumber.equals(cmp.phoneNumber))
+			return true;
+		else 
+			return false;
+	}
+
+}//PhoneInfo
+
+
+
+class PhoneUnivInfo extends PhoneInfo{//대학동기
+	String major;//전공
+	int year;//학년
+	
+	public PhoneUnivInfo(String name, String phoneNumber, String major, int year) {
+		super(name, phoneNumber);
+		this.major = major;
+		this.year = year;
+	}
+
+	@Override
+	void showPhoneInfo() {
+		super.showPhoneInfo();
+		System.out.println("전공 : "+major);
+		System.out.println("학년 : "+year);
+	}
+
+	@Override
+	public String toString() {
+		return "대학동기 [이름=" + name + ", 전화번호=" +phoneNumber + ", 전공=" + major + ", 학년=" + year + "]\r\n";
+	}
+	
+	
+}
+
+class PhoneCompanyInfo extends PhoneInfo{//회사동기
+	String company;//전공
+
+	public PhoneCompanyInfo(String name, String phoneNumber, String company) {
+		super(name, phoneNumber);
+		this.company = company;
+	}
+
+	@Override
+	void showPhoneInfo() {
+		super.showPhoneInfo();
+		System.out.println("회사명 : "+company);
+	}
+
+	@Override
+	public String toString() {
+		return "회사동기 [이름=" + name + ", 전화번호=" +phoneNumber + ", 회사=" + company + "]\r\n";
+	}
+}
+
+/*
+ * 
+ */
+
+public class PhoneBookManager implements PhoneManager{//폰메니저에 
+	//멤버변수-포함관계
+	//private PhoneInfo[] pi = null; //pi PhoneInfo타입만 관리하는 배열 객체 생성  //포함관계
+	
+	//private int friendCnt=0;//역활 : index + 저장된 친구수와 일치하는 역할
+	
+	/*
+	 * File 클래스
+	 * 파일이나 디렉토리에 대해 경로명, 크기, 타입, 수정 날짜 등의 속성정보를 제공하고
+	 * 파일 삭제, 디렉토리 생성, 파일 이름 변경, 디렉토리 내에 파일 리스트 제공 등
+	 * 다양한 파일 관리하는 작업을 지원한다.
+	 */
+	/** 운영체제의 호환성(어떤 OS에서도 실행되도록)을 위해 : 윈도우 / \ 둘다 사용, 근데 리눅스는 /만 사용 **/
+	private final File dataFile = new File("C:" + File.separator + "test" + File.separator + "PhoneBook.txt");
+	//File.separator 윈도우나 리눅스처럼 운영체제에따라 / \역활을 선택해줌
+	//해당 위치에 파일이 없으면 storeToFile()메서드로 '파일에 저장할때 파일은 자동생성'. 그러나 폴더가 없으면 예외발생하므로 폴더는 직접 만들어 줘야 함.
+	
+	//Set(부모 인터페이스)로 자동형변환
+	Set<PhoneInfo> infoStorage = new HashSet<PhoneInfo>();
+	
+	/*
+	public PhoneBookManager(int max_size){//배열은 반드시 최대크기로 만들어줌.
+		//super(); 밑에 이렇게 만들면 자동으로 컴파일러가 super붙여줌
+		pi=new PhoneInfo[max_size];//입력받은 수로 배열객체 생성 
+	}
+	*/
+	
+	/************* 싱글톤(단 1개의 객체만 생성) 만드는 방법*************************************/
+	static PhoneBookManager inst = null;
+	
+	//메서드를 통해서 매니저 객체 생성 : 따라서 메서드는 메모리에 올라가 있는 상태
+	static PhoneBookManager createMangerInst() {
+		//참조하는 매니저 객체가 없으면 새로운 PhonBookManager()객체를 생성하고
+		if(inst == null) inst = new PhoneBookManager();
+		return inst;//기존에 참조하고 있는 PhoneBookManager 객체의 주소를 리턴
+	}
+	
+	//생성자
+	private PhoneBookManager() {
+		readFromFile();//텍스트 파일로부터 데이터를 읽어들이는 메서드
+	}
+	
+	/********************************************************************************/
+	private String name;//필요에 의해 멤버변수처럼 선언하여 사용
+	private String phoneNumber;
+	
+	private void readBasicInfo() {
+		System.out.print("이름 : ");
+		name = MenuViewer.sc.next();
+
+		System.out.print("전화번호 : ");
+		phoneNumber = MenuViewer.sc.next();
+	}
+	
+	private PhoneInfo readFriendInfo() {//실질적인 입력기능 - 일반친구들의 데이터를 입력받아 객체를 생성하는 아이
+		/*
+		System.out.print("이름 : ");
+		String name = MenuViewer.sc.next();//위에네임과 햇갈리면안됨 이건 지역변수임
+
+		System.out.print("전화번호 : ");
+		String phoneNumber = MenuViewer.sc.next();//위에 네임과 햇갈리면안됨 이건 지역변수임
+		*/
+		readBasicInfo();
+		return new PhoneInfo(name, phoneNumber);
+	}
+
+	private PhoneInfo readUnivFriendInfo() {
+		/*
+		System.out.print("이름 : ");
+		String name = MenuViewer.sc.next();
+
+		System.out.print("전화번호 : ");
+		String phoneNumber = MenuViewer.sc.next();
+		*/
+		readBasicInfo();
+		
+		System.out.print("전공 : ");
+		String major = MenuViewer.sc.next();
+
+		System.out.print("학년 : ");
+		int year = MenuViewer.sc.nextInt();
+		
+		return new PhoneUnivInfo(name, phoneNumber, major, year); 
+		//★대학 동기 객체(자식)->일반동기인(부모) 자동으로 형변환되어 리턴됨
+	}
+	
+	private PhoneInfo readCompanyFriendInfo() {
+		/*
+		System.out.print("이름 : ");
+		String name = MenuViewer.sc.next();
+
+		System.out.print("전화번호 : ");
+		String phoneNumber = MenuViewer.sc.next();
+		*/
+		readBasicInfo();
+		
+		System.out.print("회사명 : ");
+		String company = MenuViewer.sc.next();
+		
+		return new PhoneCompanyInfo(name, phoneNumber, company);//★회사 동기 객체(자식)->일반동기인(부모) 자동으로 형변환되어 리턴됨
+	}
+	
+	@Override//예외처리하는 2번째 방법 : 예외객체는 throws로 input()메서드를 메인한테 던져서 호출함. 그래서 메인측에서 처리하도록한다.
+	public void inputData() throws MenuChoiceException  {//외부에 노출된 버튼 //부모에게 throws하고 나서 자식에게 있어야함.
+		//추가한 친구수==배열의 크기 							//자식은 부모보다 더 많은 예외를 선언할 수 없다.
+		//if(friendCnt == pi.length) throw new PhoneSizeException();//수동으로 예외객체 생성
+		
+		System.out.println("친구 정보 입력을 시작합니다...");
+		System.out.println("1.일반    2.대학    3.직장");
+		System.out.print("선택>> ");
+		
+		int choice=MenuViewer.sc.nextInt();
+		
+		if(choice < INPUT_SELECT.NORMAL || choice > INPUT_SELECT.COMPANY)
+			throw new MenuChoiceException(choice);
+		
+		PhoneInfo info=null;//지역변수
+		
+//		int friendCnt=0;//역활 : index + 저장된 친구수를 의미하므로 따라서 지역변수로 선언하면 아니된다. why? 값을 유지해야하기 때문
+		
+		switch(choice) {
+		case INPUT_SELECT.NORMAL 	: info=readFriendInfo(); break;//1. 1누르면 리드프렌드 인포 리턴 하고 스위치문빠져나와서 배열에 넣음
+		case INPUT_SELECT.UNIV 		: info=readUnivFriendInfo(); break;
+		case INPUT_SELECT.COMPANY 	: info=readCompanyFriendInfo(); break;
+		}
+		
+		//pi[friendCnt++]=info;//배열에 해당객체의 주소를 받아서 저장 후 배열의 index를 1 증가시킨다.
+		//friendCnt++;//친구 수가 1 증가
+		
+		boolean isAdded=infoStorage.add(info);//같은 이름과 전화번호가 같아도 그냥 추가됨
+		if(isAdded == true) System.out.println("친구 정보 입력이 완료되었습니다. \n");
+		else System.out.println("이미 저장된 친구 정보입니다.");
+	}
+
+	public String[] searchData(String name) {//이벤트 처리 객체로부터 전달받은 이름으로 검색
+		//콘솔을 이용하지 않고 swing의 Frame 이용
+		/*
+		System.out.println("친구 정보 검색을 시작합니다...");
+		
+		System.out.print("검색할 친구 이름 입력 : ");
+		String name = MenuViewer.sc.next();
+		
+		int dataIdx=search(name); 
+		if(dataIdx == -1) {//'이름으로 검색'하여 정보 출력하여 보여줌
+			System.out.println("검색하신 친구를 찾을 수 없습니다.");
+		}else {
+			pi[dataIdx].showPhoneInfo();//★자식객체라면 재정의된 메서드 호출됨
+			System.out.println("친구 정보 검색을 완료합니다.\n");
+		}
+		*/
+		
+		ArrayList<PhoneInfo> info = search(name);
+		String[] nameSet=new String[info.size()];//배열객체를 생성 한 이유 : textarea에 추가하려면 String 타입이어야 가능
+		
+		if(info.size()==0) { //size():객체수==0이면 같은 이름의 정보가 없다.
+			return null;
+		}else {//같은 이름의 정보를 하나씩 String[] 담아서 
+			for(int i=0;i<info.size();i++) {
+				nameSet[i] = info.get(i).toString(); 
+			}
+			return nameSet;
+		}
+	}
+	
+	/*
+	 * 같은 이름을 가진 친구객체들을 HashSet에서 찾아서 그 객체들을 arrayList에 추가해서 리턴
+	 * ArrayList클래스 사용 이유? 같은 이름이 여러 명 있을 수 있으므로 각각의 정보들을 ArrayList에 추가
+	 */
+	private ArrayList<PhoneInfo> search(String name) {
+		ArrayList<PhoneInfo> sameName = new ArrayList<PhoneInfo>();
+		
+		Iterator<PhoneInfo> itr = infoStorage.iterator();//HashSet:index가 없음.(반복자 또는 향상된 for문)
+		
+		
+		while(itr.hasNext()) {
+			PhoneInfo curInfo = itr.next();
+			if(name.equals(curInfo.name)) {//name:매개변수 (따라서 this. 사용못함)
+				sameName.add(curInfo);
+			}
+		}
+		return sameName;
+	}
+
+	@Override
+	public boolean deleteData(String name) {
+		Iterator<PhoneInfo> itr=infoStorage.iterator();
+		int deleteCount=0;
+		
+		while(itr.hasNext()) {
+			PhoneInfo curInfo=itr.next();
+			if(curInfo.name.equals(name)) {
+				itr.remove();//삭제
+				deleteCount++;
+			}
+		}
+		
+		if(deleteCount != 0) return true;
+		else return false;
+	}
+
+	
+	
+	private void readFromFile() {
+		if(dataFile.exists() == false) {//파일이 존재하면 true를 돌려주고 없으면 false
+			System.out.println("파일이 준비되어 있지 않습니다.");
+			return;
+		}
+		
+		try {
+			//FileInputStream file = new FileInputStream(dataFile);
+			//ObjectInputStream in = new ObjectInputStream(file);
+			
+			ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFile));
+			
+			while(true) {
+				PhoneInfo info=(PhoneInfo)in.readObject();//Object타입 -> PhoneInfo로 강제형변환
+				if(info == null) break;//더 이상 읽어올 데이터가 없으면 반복문을 빠져나감 
+				infoStorage.add(info);//하나씩 파일로부터 읽어온 객체를 추가합니다.
+			}
+			
+			in.close();
+			
+		}/* catch(FileNotFoundException e) {//FileNotFoundException은 IOException의 자식 클래스
+			return;//아무 메세지 없이 메서드 종료
+		}*/ catch (IOException | ClassNotFoundException e) {
+			return; //아무 메세지 없이 메서드 종료
+		}	
+	}
+	
+	//HashSet에 저장된 데이터를 텍스트 파일에 바로 문자열로 저장
+	public void storeToFile(){
+		//FileOutputStream file = new FileInputStream(dataFile);
+		//ObjectOutputStream in = new ObjectInputStream(file);
+	
+		try {
+			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFile));
+			
+			Iterator<PhoneInfo> itr=infoStorage.iterator();
+			while(itr.hasNext()) {
+				out.writeObject(itr.next());//PhoneInfo->Object타입 으로 자동형변환
+			}
+		}catch(FileNotFoundException e) {
+			System.out.println("해당 파일이 없습니다.");
+		}catch (IOException e) {
+			System.out.println("파일에 저장시 오류. 경로명 확인해보세요~");
+		}
+	}
+}
