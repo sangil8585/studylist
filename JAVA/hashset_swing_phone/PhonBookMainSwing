@@ -1,0 +1,67 @@
+package hashset_swing_phone;
+
+import java.util.InputMismatchException;
+/*
+ * 홍대표는 a로부터 PhoneManager를 구현한 PhoneBookManager클래스로 실행
+ */
+public class PhonBookMainSwing {
+
+	public static void main(String[] args) {//throws PhoneSizeException {//JVM에게 던져서 처리
+		//PhoneBookManager 객체생성
+		PhoneBookManager manager=PhoneBookManager.createMangerInst();		
+		
+		//Frame(창) 생성
+		SearchDeleteFrame winFrame = new SearchDeleteFrame("전화번호 관리-검색과 삭제");
+		
+		int choice = 0;
+		
+		while(true) {
+			MenuViewer.showMenu();//호출시 1234뜨고 호출하라 뜸.
+			
+			//예외처리하는 첫 번째 방법
+			try {//예외가 발생할 가능성이 있는 부분
+				choice=MenuViewer.sc.nextInt(); //ㅁ, A 같은 문자나 1.23같은 실수를 입력하면 예외객체 발생. '정수만 입력'
+				/*****주의 : nextInt() 정수만 읽어들이고 버퍼에 엔터가 남아있음
+				 * 만약 'a엔터'를 쳤다면 a를 못읽어들인것 버퍼에는 그대로 'a엔터'남아있으로 버퍼가 비어있지 않으면 무한루프에 계속 빠짐*****/
+				
+				//입력한 정수가 1 또는 4가 아니면 예외객체가 생성
+				if(choice != INIT_MENU.INPUT && choice != INIT_MENU.EXIT) {
+					throw new MenuChoiceException(choice);//자바가상 머신에 던져줌.
+				} //MenuChoiceException예외객체 생성(수동)
+				
+				switch(choice) {
+				case INIT_MENU.INPUT : manager.inputData(); break;//인풋이 1을 대신함
+//				case INIT_MENU.SEARCH: manager.searchData(); break;
+//				case INIT_MENU.DELETE: manager.deleteData(); break;
+				case INIT_MENU.EXIT	 : manager.storeToFile();
+									   System.out.println("*** 프로그램 종료합니다. ***");
+									   
+										System.exit(0);//정상적으로 프로그램을 종료하는 명령 메서드로 프레임 창까지 같이 종료됨.
+				//default:System.out.println("입력하신 메뉴는 없습니다."); //1~4이외의 정수 입력 => '예외클래스' 만들어 처리
+				}
+			}/*catch(Exception e) {//모든 예외를 처리
+				//e.printStackTrace();//e.getMessage()를 호출하여 오류 메세지+ 예외발생경로
+				System.out.println("입력하신 메뉴가 없거나 더이상 저장할 공간이 없습니다.");
+				MenuViewer.sc.nextLine();//엔터까지 읽어들여 버퍼 비우기
+			}
+			*/
+			/** 여러 예외를 따로 처리 **/
+			catch(InputMismatchException e){
+				System.out.println("정수 1~4사이의 값을 입력해주세요.");
+				System.out.println("메뉴 선택을 처음부터 다시 진행합니다.\n");
+				MenuViewer.sc.nextLine();//엔터까지 읽어들여 버퍼 비우기
+			}catch(MenuChoiceException e) {
+				System.out.println(e.getMessage());
+				e.showWrongChoice();
+				System.out.println("메뉴 선택을 다시 시작합니다...\n");
+			}catch(Exception e) {//InputMismatchException, PhoneSizeException제외한 예외객체 받아서 처리
+				System.out.println(e);//'예외객체의 종류 + 예외 메세지' 출력
+				//System.out.println(e.getMessage());//'예외 메세지'만 출력
+			}finally {//예외 발생 여부와 관계없이 try{}블록에 진입하면 무조건 실행
+				System.out.println("** 고객님 감사합니다. **");
+			}
+//			System.out.println("감사합니다.");//이렇게 문구가 있을때는 위에 continue를 무조건 입력
+	}
+}
+
+}
