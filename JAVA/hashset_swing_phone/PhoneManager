@@ -1,0 +1,10 @@
+package hashset_swing_phone;
+//홍대표가 a한테 PhonManager인터페이스를 구현한 클레스를 완성시켜달라고 의뢰한다.
+
+public interface PhoneManager {
+	void inputData() throws  MenuChoiceException;//고객(친구)의 정보를 입력하는 메서드
+	String[] searchData(String name);//고객(친구)의 이름으로 정보 검색(같은 이름 존재하므로 여러 개의 정보를 리턴받음)
+	boolean deleteData(String name);//고객(친구)의 이름으로 정보를 삭제해주는 메서드
+	
+	void storeToFile();//고객들의 정보를 텍스트 파일에 저장
+}
