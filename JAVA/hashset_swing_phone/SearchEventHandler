@@ -1,0 +1,39 @@
+package hashset_swing_phone;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+//이벤트를 처리하는 클래스는 반드시 ActionListener인터페이스에 미완성된 추상 메서드를 재정의
+public class SearchEventHandler implements ActionListener {
+	//멤버변수=필드
+	JTextField srchField;//입력받은 이름
+	JTextArea textArea;//이름으로 검색하면 전화번호정보 출력
+	
+	public SearchEventHandler(JTextField searchField, JTextArea textArea) {
+		super();
+		this.srchField = searchField;
+		this.textArea = textArea;
+	}
+
+	@Override
+	//이벤트(검색단추 클릭)가 발생하면 자동호출되어 이벤트 객체를 받아서 처리해줌
+	public void actionPerformed(ActionEvent e) {//수동태(자동호출되므로)
+		String name = srchField.getText();//사용자가 JTextField에 입력된 "이름문자열"을 얻어와
+		
+		PhoneBookManager manager=PhoneBookManager.createMangerInst();
+		String[] srchResult = manager.searchData(name);//이름으로 검색->같은 이름의 정보들을 문자열 배열로 리턴
+		
+		if(srchResult == null)
+			textArea.append("해당하는 이름의 정보가 존재하지 않습니다. \n\n");
+		else {
+			for(String s : srchResult ) {//같은 이름의 정보들을
+				textArea.append(s);//한줄씩 추가
+			}
+			textArea.append("\n"); //반줄 추가
+		}
+	}
+
+}
