@@ -1,0 +1,84 @@
+package hashset_swing_phone;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+
+public class SearchDeleteFrame extends JFrame{
+	JLabel srchName = new JLabel("이름 : ");
+	JTextField srchField = new JTextField(15);
+	JButton srchButton = new JButton("검색");
+	
+	JLabel delName = new JLabel("이름 : ");
+	JTextField delField = new JTextField(15);
+	JButton delButton = new JButton("검색");
+	
+	JTextArea textArea = new JTextArea(20, 25);
+	
+	public SearchDeleteFrame(String title){
+		super(title);//창 제목
+		setBounds(100, 200, 450, 450);//this.생략
+		//(x,y,width,height) : x y(창의 위치), width height(가로 세로 크기)
+		
+		setLayout(new BorderLayout());//기본배치관리자이므로 생략 가능
+		
+		Border border = BorderFactory.createEtchedBorder();
+		//현재 배경색을 사용하여 '에치된' 모양으로 경계를 작성
+		
+		Border srchBorder = BorderFactory.createTitledBorder(border, "검색");//'에치된'경계에 제목"검색"을 추가
+		
+		JPanel srchPanel=new JPanel();
+		srchPanel.setBorder(srchBorder);
+		
+		srchPanel.setLayout(new FlowLayout());//왼쪽에서 오른쪽으로 차례대로 하나하나씩 배치 더이상 공간이 없을시 아래로 자동 배치함.
+		srchPanel.add(srchName);//이름 달고
+		srchPanel.add(srchField);//필드 달고
+		srchPanel.add(srchButton);//검색 버튼 달고
+		
+		Border delBorder = BorderFactory.createTitledBorder(border, "삭제");//'에치된'경계에 제목"삭제"를 추가
+		
+		JPanel delPanel=new JPanel();
+		delPanel.setBorder(delBorder);
+		
+		delPanel.setLayout(new FlowLayout());//왼쪽에서 오른쪽으로 차례대로 하나하나씩 배치 더이상 공간이 없을시 아래로 자동 배치함.
+		delPanel.add(delName);
+		delPanel.add(delField);
+		delPanel.add(delButton);
+		
+		Border textBorder = BorderFactory.createTitledBorder(border, "전화번호 정보");//'에치된'경계에 제목"전화번호 정보"를 추가
+		
+		//JTextArea 컴포넌트를 JScrollPane에 삽입하여야 스크롤바를 지원받을 수 있다.
+		JScrollPane scrollTextArea = new JScrollPane(textArea);//스크롤바가 자동으로 생성되는 textArea
+		//프레임(창) 크기를 작게 조절하면 자동으로 수평 또는 수직스크롤바가 나타난다.
+		
+		scrollTextArea.setBorder(textBorder);
+		
+		this.add(srchPanel, "North"); //프레임창을 말함		
+		this.add(delPanel, "South"); 
+		this.add(scrollTextArea, "Center"); 
+		
+		//버튼(이벤트소스)에 '이벤트 처리 객체'를 등록(연결)
+		srchButton.addActionListener(new SearchEventHandler(srchField, textArea));
+		delButton.addActionListener(new DeleteEventHandler(delField, textArea));
+		
+		this.setVisible(true);//창이 화면에 나타남
+		
+		//프레임창에 X단추를 누르면 종료
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		
+	}
+	
+	
+	
+}
