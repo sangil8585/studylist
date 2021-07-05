@@ -1,0 +1,18 @@
+package hashset_swing_phone;
+
+import java.util.Scanner;
+
+public class MenuViewer {
+	public static Scanner sc = new Scanner(System.in);
+	
+	
+	public static void showMenu() {
+		System.out.println("선택하세요...");
+		System.out.println("1. 친구 정보 입력");
+//		System.out.println("2. 친구 정보 검색");
+//		System.out.println("3. 친구 정보 삭제");
+		System.out.println("4. 프로그램 종료");
+		
+		System.out.print("선택>> ");
+	}
+}
