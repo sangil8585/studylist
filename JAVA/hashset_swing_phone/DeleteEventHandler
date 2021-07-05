@@ -1,0 +1,30 @@
+package hashset_swing_phone;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+public class DeleteEventHandler implements ActionListener {
+	
+	JTextField delField;//입력받은 이름
+	JTextArea textArea;//이름으로 검색하면 전화번호정보 출력
+	
+	public DeleteEventHandler(JTextField delField, JTextArea textArea) {
+		super();
+		this.delField = delField;
+		this.textArea = textArea;
+	}
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String name = delField.getText();
+		
+		PhoneBookManager manager=PhoneBookManager.createMangerInst();
+		boolean isDeleted=manager.deleteData(name);
+		
+		if(isDeleted) textArea.append("입력하신 친구 정보를 삭제하였습니다. \n\n");
+		else textArea.append("입력하신 이름이 존재하지 않습니다. \n\n");
+	}
+
+}
