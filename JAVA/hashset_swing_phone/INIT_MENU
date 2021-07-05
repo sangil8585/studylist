@@ -1,0 +1,5 @@
+package hashset_swing_phone;
+
+public interface INIT_MENU { //전화부호부 저장, 찾기, 삭제, 나가기
+	int INPUT=1, SEARCH=2, DELETE=3, EXIT=4; 
+}
