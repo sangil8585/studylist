@@ -1,0 +1,183 @@
+계발단계에서 뭔가를 만들 때 생각해야할 것! 
+--회원관리
+--아이디
+--비밀번호
+--이름
+--연락처
+--주소
+--가입일
+
+create table test01 (
+id varchar2(50) not null primary key, 기본키는 무조건 하나  있어야한다.
+passwd varchar2(50) not null,
+name varchar2(50) not null,
+phone varchar2(50) not null,
+address varchar2(50) not null,
+wdate date default sysdate --default는 값이 안들어갈때 뒤에껄 주겠다.
+);
+
+select * from tab;
+
+-- hong, 1234, 홍길동, 010-1111-1111, 대구, sysdate
+insert into test01 values ('hong', '1234', '홍길동', '010-1111-1111', '대구', sysdate);
+select * from test01;
+commit; -- 커밋을 해줘야 제대로 입력된거임.
+
+insert into test01 (id, passwd, name, phone, address, wdate)
+values ('kim', '1234', '김선호', '010-2222-2222', '경기', sysdate);
+
+insert into test01 (passwd, name, phone, address, wdate, id)
+values ('1234', '김선호', '010-2222-2222', '경기', sysdate, 'sun');
+
+insert into test01 (id, passwd, name, phone, address)
+values ('ho', '1234', '김선호', '010-2222-2222', '서울');
+
+update test01 set address = '강원'
+where id = 'hong';
+
+update test01 set phone = '010-5555-5555', address = '대구'
+where id = 'sun';
+
+delete from test01 
+where id = 'kim';
+
+
+
+create table book_all (
+id number not null,
+subject varchar2(50) not null,
+author varchar2(50) not null,
+created date not null,
+profile varchar2(50) not null
+);
+
+drop table book_all;
+
+insert into book_all (id, subject, author, created, profile)
+values (1, '점프 투 파이썬', '박응용', '2019-07-14', '프로그래밍');
+insert into book_all (id, subject, author, created, profile)
+values (2, '점프 투 자바', '박응용', '2018-08-25', '프로그래밍');
+insert into book_all (id, subject, author, created, profile)
+values (3, '딥 러닝을 이용한 자연어 처리 입문', 'WJY', '2019-07-12', '프로그래밍');
+insert into book_all (id, subject, author, created, profile)
+values (4, '공이의 수학정리노트', 'Donghoon', '2019-04-05', '수학');
+insert into book_all (id, subject, author, created, profile)
+values (5, '예제로 배우는 ORACLE 11g', '초록우산', '2019-07-12', '데이타베이스');
+insert into book_all (id, subject, author, created, profile)
+values (6, '주식 시장을 이기는 마법의 자동매매', '엑슬론', '2019-03-16', '주식');
+insert into book_all (id, subject, author, created, profile)
+values (7, '비트코인 개발자 가이드', 'soori', '2018-02-24', '금융');
+insert into book_all (id, subject, author, created, profile)
+values (8, '미국 금융공학 유학', '엑슬론', '2019-07-12', '주식');
+insert into book_all (id, subject, author, created, profile)
+values (9, 'Deep Inside VBA', '곽승주', '2019-04-27', 'VBA');
+insert into book_all (id, subject, author, created, profile)
+values (10, 'CentOS 만들기', '박응용', '2016-10-19', '프로그래밍');
+insert into book_all (id, subject, author, created, profile)
+values (11, 'Windows Server 만들기', '박응용', '2017-08-09', '프로그래밍');
+
+
+
+create table book_01 (
+id number not null,
+author varchar2(50) null,
+profile varchar2(50) null
+);
+
+select * from book_01;
+
+commit;
+
+insert into book_01 (id, author, profile)
+values (1, '박응용', '프로그래밍');
+insert into book_01 (id, author, profile)
+values (2, 'WJY', '프로그래밍');
+insert into book_01 (id, author, profile)
+values (3, 'Donghoon', '수학');
+insert into book_01 (id, author, profile)
+values (4, '초록우산', '데이타베이스');
+insert into book_01 (id, author, profile)
+values (5, '엑슬론', '주식');
+insert into book_01 (id, author, profile)
+values (6, 'Soori', '금융');
+insert into book_01 (id, author, profile)
+values (7, '곽승주', 'VBA');
+
+create table book_02 (
+id number not null,
+subject varchar2(100) null,
+created date not null,
+author_id number not null
+);
+
+select * from book_02;
+
+insert into book_02 (id, subject, created, author_id)
+values (1, '점프 투 파이썬', '2019-07-14', 1);
+insert into book_02 (id, subject, created, author_id)
+values (2, '점프 투 자바', '2018-08-25', '1');
+insert into book_02 (id, subject, created, author_id)
+values (3, '딥 러닝을 이용한 자연어 처리 입문', '2019-07-12', 2);
+insert into book_02 (id, subject, created, author_id)
+values (4, '공이의 수학정리노트', '2019-04-05', 3);
+insert into book_02 (id, subject, created, author_id)
+values (5, '예제로 배우는 ORACLE 11g', '2019-07-12', 4);
+insert into book_02 (id, subject, created, author_id)
+values (6, '주식 시장을 이기는 마법의 자동매매', '2019-03-16', 5);
+insert into book_02 (id, subject, created, author_id)
+values (7, '비트코인 개발자 가이드', '2018-02-24', 6);
+insert into book_02 (id, subject, created, author_id)
+values (8, '미국 금융공학 유학', '2019-07-12', 5);
+insert into book_02 (id, subject, created, author_id)
+values (9, 'Deep Inside VBA', '2019-04-27', 7);
+insert into book_02 (id, subject, created, author_id)
+values (10, 'CentOS 만들기', '2016-10-19', 1);
+insert into book_02 (id, subject, created, author_id)
+values (11, 'Windows Server 만들기', '2017-08-09', 1);
+
+drop table book_02;
+
+select * from book_all
+where author = '박응용';
+
+select * from book_all
+where created = '박응용' and profile = '주식';
+
+select *from book_all
+where created between '2018-01-01' and '2018-12-31'; --쿼리문, query문
+
+select * from book_all
+where created like '18%' or profile = '프로그래밍';
+
+update book_all set author = '박응용' where author = '박일용';
+
+select * from book_02;
+
+--서브쿼리
+select id, subject, created, author_id,
+    (select author from book_01 where book_01.id = book_02.author_id) author,
+    (select profile from book_01 where book_01.id = book_02.author_id) profile
+from book_02;
+
+select id, subject, created, author_id,
+    (select author || '/' || profile from book_01 where book_01.id = book_02.author_id) aaa
+from book_02;
+
+--String msg = rs.getString("aaa"); //박응용/프로그래밍
+--박응용/프로그래밍
+--String[] array = msg.split("/");
+--String author = array[0];
+--String profile = array[1];
+
+--조인 : inner join, outer join
+select book_02.*, book_01.*
+from book_02, book_01
+where book_02.author_id = book_01.id;
+
+select b2.*, b1.*
+from book_02 b2, book_01 b1
+where b2.author_id = b1.id;
+
+select b2.*, b1.*
+from book_02 b2 inner join book_01 b1
+                on b2.author_id = b1.id;
